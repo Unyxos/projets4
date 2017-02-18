@@ -76,3 +76,17 @@ fos_user:
     from_email:
             address:        no-reply@jeudebouffe.fr
             sender_name:    oui
+
+vich_uploader:
+    db_driver: orm # or mongodb or propel or phpcr
+
+    mappings:
+            avatar_image:
+                uri_prefix:         /images/avatars
+                upload_destination: '%kernel.root_dir%/../web/images/avatars'
+                namer:              vich_uploader.namer_uniqid
+
+            carte_image:
+                uri_prefix:         /images/cartes
+                upload_destination: '%kernel.root_dir%/../web/images/cartes'
+                namer:              vich_uploader.namer_uniqid
