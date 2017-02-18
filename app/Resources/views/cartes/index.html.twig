@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des cartes</h1>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Categorie</th>
+                <th>Nom</th>
+                <th>Valeur</th>
+                <th>Image</th>
+                <th>Extra</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for carte in cartes %}
+                <tr>
+                    <td><a href="{{ path('cartes_show', { 'id': carte.id }) }}">{{ carte.id }}</a></td>
+                    <td>{{ carte.categorie }}</td>
+                    <td>{{ carte.nom }}</td>
+                    <td>{{ carte.valeur }}</td>
+                    <td>{{ carte.image }}</td>
+                    <td>{% if carte.extra %}Yes{% else %}No{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('cartes_show', { 'id': carte.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('cartes_edit', { 'id': carte.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <ul>
+        <li>
+            <a href="{{ path('cartes_new') }}">Create a new carte</a>
+        </li>
+    </ul>
+{% endblock %}

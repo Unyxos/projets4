@@ -18,4 +18,20 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ]);
     }
+
+
+    /**
+     * @route ("/classement", name="classement")
+     */
+    public function classement()
+    {
+        //on récupère tous les utilisateurs en bdd pour les afficher sur la page classement
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('AppBundle:User')->findBy(array(), array('points' => 'DESC'));
+
+        return $this->render('default/classement.html.twig', array(
+            'users' => $users,
+        ));
+    }
 }

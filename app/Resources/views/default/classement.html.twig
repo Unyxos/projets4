@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Classement</h1>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Avatar</th>
+                <th>Pseudo</th>
+                <th>Adresse mail</th>
+                <th>Points</th>
+                <th>Parties gagnées</th>
+                <th>Parties perdues</th>
+                <th>Ratio W/L</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</a></td>
+                    <td><img width="64px" src="{{ user.avatar }}"></td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.points }}</td>
+                    <td>{{ user.parties_gagnees }}</td>
+                    <td>{{ user.parties_perdues }}</td>
+                    <td>{{ (user.parties_gagnees/user.parties_perdues)|round(1) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
