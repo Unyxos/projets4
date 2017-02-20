@@ -38,6 +38,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+            # other form themes
+            - 'VichUploaderBundle:Form:fields.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -76,3 +79,20 @@ fos_user:
     from_email:
             address:        no-reply@jeudebouffe.fr
             sender_name:    oui
+
+vich_uploader:
+    db_driver: orm # or mongodb or propel or phpcr
+
+    mappings:
+            avatar_image:
+                uri_prefix:         /images/avatars
+                upload_destination: '%kernel.root_dir%/../web/images/avatars'
+                namer:              vich_uploader.namer_uniqid
+                inject_on_load:     false
+                delete_on_update:   true
+                delete_on_remove:   true
+
+            carte_image:
+                uri_prefix:         /images/cartes
+                upload_destination: '%kernel.root_dir%/../web/images/cartes'
+                namer:              vich_uploader.namer_uniqid
