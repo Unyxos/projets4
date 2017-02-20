@@ -96,3 +96,8 @@ vich_uploader:
                 uri_prefix:         /images/cartes
                 upload_destination: '%kernel.root_dir%/../web/images/cartes'
                 namer:              vich_uploader.namer_uniqid
+
+fos_message:
+    db_driver: orm
+    thread_class: AppBundle\Entity\Thread
+    message_class: AppBundle\Entity\Message
