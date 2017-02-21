@@ -9,3 +9,5 @@ _Bundles installés_
 `FOS User Bundle`
 
 `VichUploadBundle`
+
+`FOSMessageBundle`

@@ -7,13 +7,15 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use FOS\MessageBundle\Model\ParticipantInterface;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  * @Vich\Uploadable
  */
-class User extends BaseUser
+class User extends BaseUser implements ParticipantInterface
 {
     /**
      * @ORM\Id
@@ -61,7 +63,7 @@ class User extends BaseUser
      *
      * @var string
      */
-    private $imageName;
+    private $imageName = 'https://image.freepik.com/free-icon/male-profile-user-shadow_318-40244.jpg';
 
     /**
      * @ORM\Column(type="datetime")
