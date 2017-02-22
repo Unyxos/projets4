@@ -20,6 +20,12 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new FOS\MessageBundle\FOSMessageBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Discutea\DForumBundle\DForumBundle(),
+
+
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

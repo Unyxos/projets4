@@ -70,7 +70,7 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @var \DateTime
      */
-    protected $updatedAt = null;
+    protected $updatedAt;
 
     //Ici le __construct() appelle les éléments de FOS User Bundle par défaut, on y touche pas.
     public function __construct()
