@@ -11,3 +11,5 @@ _Bundles installés_
 `VichUploadBundle`
 
 `FOSMessageBundle`
+
+`EasyAdminBundle`

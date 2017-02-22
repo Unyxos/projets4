@@ -70,7 +70,7 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt = null;
 
     //Ici le __construct() appelle les éléments de FOS User Bundle par défaut, on y touche pas.
     public function __construct()
@@ -221,5 +221,9 @@ class User extends BaseUser implements ParticipantInterface
     public function getImageName()
     {
         return $this->imageName;
+    }
+
+    public function getUpdatedAt(){
+        return $this->updatedAt;
     }
 }
