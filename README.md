@@ -2,7 +2,7 @@ projets4
 ========
 
 A Symfony project created on February 16, 2017, 10:08 am.
-# projets4
+#Jeu de carte
 
 _Bundles installés_
 
@@ -15,3 +15,11 @@ _Bundles installés_
 `EasyAdminBundle`
 
 `DForumBundle`
+
+#Modification des Entités pour EAB.
+Modifier le fichier Forum et Category de Discutea pour y ajouter 
+```
+public function __toString() {
+        return $this->name;
+    }
+```

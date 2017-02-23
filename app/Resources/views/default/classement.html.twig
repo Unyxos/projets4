@@ -26,7 +26,11 @@
                     <td>{{ user.points }}</td>
                     <td>{{ user.parties_gagnees }}</td>
                     <td>{{ user.parties_perdues }}</td>
-                    <td>{{ (user.parties_gagnees/user.parties_perdues)|round(1) }}</td>
+                    {% if user.parties_perdues == 0 %}
+                        <td>{{ user.parties_gagnees }}</td>
+                    {% else %}
+                        <td>{{ (user.parties_gagnees/user.parties_perdues)|round(1) }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
