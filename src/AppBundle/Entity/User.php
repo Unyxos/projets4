@@ -37,16 +37,10 @@ class User extends BaseUser implements ParticipantInterface
     protected $parties_perdues = 0;
 
     /**
-     * @var string
-     * @ORM\Column(name="avatar", type="string", length=255)
-     */
-    protected $avatar = "https://image.freepik.com/free-icon/male-profile-user-shadow_318-40244.jpg";
-
-    /**
      * @var int
      * @ORM\Column(name="points", type="integer")
      */
-    protected $points = 0;
+    protected $points = 5;
 
     //On déclare les champs relatifs à VichUploadBundle
     /**
@@ -84,6 +78,11 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @return String
      */
+    public function getParties_Gagnees()
+    {
+        return $this->parties_gagnees;
+    }
+
     public function getPartiesGagnees()
     {
         return $this->parties_gagnees;
@@ -107,6 +106,11 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @return String
      */
+    public function getParties_Perdues()
+    {
+        return $this->parties_perdues;
+    }
+
     public function getPartiesPerdues()
     {
         return $this->parties_perdues;
@@ -121,29 +125,6 @@ class User extends BaseUser implements ParticipantInterface
     public function setParties_Perdues($parties_perdues)
     {
         $this->parties_perdues = $parties_perdues;
-
-        return $this;
-    }
-
-    /**
-     * Get avatar
-     *
-     * @return String
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * Set avatar
-     *
-     * @param String $avatar
-     * @return User
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
 
         return $this;
     }
