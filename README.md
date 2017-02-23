@@ -13,3 +13,5 @@ _Bundles installés_
 `FOSMessageBundle`
 
 `EasyAdminBundle`
+
+`DForumBundle`

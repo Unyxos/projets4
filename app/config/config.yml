@@ -59,10 +59,13 @@ doctrine:
         #   3. Uncomment next line:
         #path:     "%database_path%"
 
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        resolve_target_entities:
+                    Symfony\Component\Security\Core\User\UserInterface: AppBundle\Entity\User
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -106,3 +109,34 @@ easy_admin:
     entities:
         - AppBundle\Entity\Cartes
         - AppBundle\Entity\User
+
+# Stof Doctrine Extensions
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+
+# Configurer knp paginator attention changer bien le page_name
+knp_paginator:
+    page_range: 3
+    default_options:
+        page_name: p
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
+
+# Configuration discutea forum
+discutea_forum:
+    preview:
+        enabled: true
+    knp_paginator:
+        page_name: p  #voir knp_paginator.default_option.page_name
+        topics:
+            enabled: true
+            per_page: 10
+        posts:
+            enabled: true
+            per_page: 10
