@@ -84,7 +84,7 @@ class User extends BaseUser implements ParticipantInterface
      *
      * @var string
      */
-    private $imageName = 'https://image.freepik.com/free-icon/male-profile-user-shadow_318-40244.jpg';
+    private $imageName = 'male-profile-user-shadow_318-40244.jpg';
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
