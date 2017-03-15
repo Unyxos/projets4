@@ -65,7 +65,7 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         resolve_target_entities:
-                    Symfony\Component\Security\Core\User\UserInterface: AppBundle\Entity\User
+            Symfony\Component\Security\Core\User\UserInterface: AppBundle\Entity\User
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -82,6 +82,9 @@ fos_user:
     from_email:
             address:        no-reply@jeudebouffe.fr
             sender_name:    oui
+    registration:
+        form:
+            type: AppBundle\Form\RegistrationType
 
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
@@ -103,13 +106,22 @@ vich_uploader:
                 delete_on_update:   true
                 delete_on_remove:   true
 
+            rang_image:
+                uri_prefix:         /images/rangs
+                upload_destination: '%kernel.root_dir%/../web/images/rangs'
+                namer:              vich_uploader.namer_uniqid
+                inject_on_load:     false
+                delete_on_update:   true
+                delete_on_remove:   true
+
+
 fos_message:
     db_driver: orm
     thread_class: AppBundle\Entity\Thread
     message_class: AppBundle\Entity\Message
 
 easy_admin:
-    site_name: 'Jeu de carte J'
+    site_name: 'FFC - Admin'
     design:
         brand_color: '#0A7840'
     entities:
@@ -134,7 +146,7 @@ easy_admin:
                     - 'parties_perdues'
                     - 'points'
             show:
-                title: 'User : (#%%entity_username%%)'
+                title: 'User : (%%entity_id%%)'
 
             form:
                 fields:
@@ -173,6 +185,24 @@ easy_admin:
             class: Discutea\DForumBundle\Entity\Category
         Forum:
             class: Discutea\DForumBundle\Entity\Forum
+        Parties:
+            class: AppBundle\Entity\Partie
+        Rang:
+            class: AppBundle\Entity\Rang
+            lable: 'Rangs'
+            list:
+                actions:
+                    - { name: 'show', icon: 'search', label: 'Voir' }
+                    - { name: 'edit', icon: 'pencil', label: 'Modifier' }
+                    - { name: 'delete', icon: 'times', label: 'Supprimer' }
+            form:
+                fields:
+                    - { property: 'nom_rang', type: 'text'}
+                    - { property: 'points_debut', type: 'integer'}
+                    - { property: 'points_fin', type: 'integer'}
+                    - 'role'
+                    - { property: 'imageFile', type: 'vich_image' }
+
 
 # Stof Doctrine Extensions
 stof_doctrine_extensions:

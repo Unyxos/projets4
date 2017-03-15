@@ -4,9 +4,19 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_MODERATOR:   ROLE_MODERATOR
-        ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN:       ROLE_MODERATOR
+        ROLE_MODERATOR:   ROLE_USER
+        ROLE_RANG_10: ROLE_RANG_9
+        ROLE_RANG_9: ROLE_RANG_8
+        ROLE_RANG_8: ROLE_RANG_7
+        ROLE_RANG_7: ROLE_RANG_6
+        ROLE_RANG_6: ROLE_RANG_5
+        ROLE_RANG_5: ROLE_RANG_4
+        ROLE_RANG_4: ROLE_RANG_3
+        ROLE_RANG_3: ROLE_RANG_2
+        ROLE_RANG_2: ROLE_RANG_1
+        ROLE_RANG_1: ROLE_USER
 
     providers:
         fos_userbundle:

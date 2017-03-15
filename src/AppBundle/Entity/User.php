@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -25,6 +26,14 @@ class User extends BaseUser implements ParticipantInterface
     protected $id;
 
     /**
+     * @var string
+     * @ORM\Column(name="sexe", type="string")
+     *
+     * @Assert\NotBlank(message="Entrez votre sexe.", groups={"Registration", "Profile"})
+     */
+    protected $sexe;
+
+    /**
      * @var int
      * @ORM\Column(name="parties_gagnees", type="integer")
      */
@@ -40,7 +49,25 @@ class User extends BaseUser implements ParticipantInterface
      * @var int
      * @ORM\Column(name="points", type="integer")
      */
-    protected $points = 5;
+    protected $points = 0;
+
+    /**
+     * @var string
+     * @ORM\Column(name="nom", type="string", nullable=true)
+     */
+    protected $nom;
+
+    /**
+     * @var string
+     * @ORM\Column(name="prenom", type="string", nullable=true)
+     */
+    protected $prenom;
+
+    /**
+     * @var \datetime
+     * @ORM\Column(name="birthday", type="datetime")
+     */
+    protected $birthday;
 
     //On déclare les champs relatifs à VichUploadBundle
     /**
@@ -60,7 +87,7 @@ class User extends BaseUser implements ParticipantInterface
     private $imageName = 'https://image.freepik.com/free-icon/male-profile-user-shadow_318-40244.jpg';
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
      */
@@ -71,6 +98,7 @@ class User extends BaseUser implements ParticipantInterface
     {
         parent::__construct();
         // your own logic
+        $this->roles = array('ROLE_RANG_1');
     }
 
     /**
@@ -204,7 +232,56 @@ class User extends BaseUser implements ParticipantInterface
         return $this->imageName;
     }
 
-    public function getUpdatedAt(){
+    public function getUpdatedAt()
+    {
         return $this->updatedAt;
+    }
+
+    public function getSexe()
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+
+        return $this;
     }
 }
