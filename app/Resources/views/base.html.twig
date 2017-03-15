@@ -23,11 +23,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav nav-center">
-                <li class="active"><a href="#">Accueil ~<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{ path('homepage') }}">Accueil ~<span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Concours ~</a></li>
                 <li><a href="#">Magazine ~</a></li>
                 <li><a href="#">Jeu ~</a></li>
-                <li><a href="#">Forum ~</a></li>
+                <li><a href="{{ path('discutea_forum_homepage') }}">Forum ~</a></li>
+                {% if app.user %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ app.user.username }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('app_user_affichermonprofil') }}">Mon profil</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                {% else %}
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Espace membre ~</a>
                     <ul class="dropdown-menu">
@@ -35,6 +44,7 @@
                         <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
                     </ul>
                 </li>
+                {% endif %}
                 <li><a href="#">Contact</a></li>
                 <li><img src="{{ asset('img/french.png') }}" alt="Site en français"></li>
                 <li><img src="{{ asset('img/english.png') }}" alt="Website in english"></li>
