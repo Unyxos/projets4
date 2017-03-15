@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css?family=Alegreya:400,700");
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500");
+/* line 5, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 10, ../sass/screen.scss */
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* line 14, ../sass/screen.scss */
+.navbar {
+  min-height: 100px;
+  margin-bottom: 0;
+}
+
+/* line 18, ../sass/screen.scss */
+.navbar-brand {
+  height: auto;
+}
+
+/* line 21, ../sass/screen.scss */
+.navbar-header {
+  min-height: 100px;
+}
+
+/* line 24, ../sass/screen.scss */
+.navbar-toggle {
+  margin-top: 35px;
+}
+
+/* line 27, ../sass/screen.scss */
+.nav-center {
+  float: none;
+}
+
+/* line 30, ../sass/screen.scss */
+.navbar-default {
+  background-color: rgba(63, 59, 57, 0.8);
+  border-color: transparent;
+}
+/* line 33, ../sass/screen.scss */
+.navbar-default .navbar-nav {
+  margin-top: 30px;
+}
+/* line 36, ../sass/screen.scss */
+.navbar-default .navbar-nav li a {
+  color: #fff;
+  font-family: "Alegreya", arial, serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+@media only screen and (max-width: 1550px) {
+  /* line 36, ../sass/screen.scss */
+  .navbar-default .navbar-nav li a {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 4.2px;
+  }
+}
+@media only screen and (max-width: 1230px) {
+  /* line 36, ../sass/screen.scss */
+  .navbar-default .navbar-nav li a {
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 3px;
+  }
+}
+/* line 53, ../sass/screen.scss */
+.navbar-default .navbar-nav li a:hover {
+  color: #c7c7c7;
+}
+/* line 57, ../sass/screen.scss */
+.navbar-default .navbar-nav li img {
+  padding: 15px;
+}
+
+/* line 67, ../sass/screen.scss */
+.slide1 {
+  background-image: url(../img/background_header.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+/* line 73, ../sass/screen.scss */
+.slide1 .content_slide1 {
+  margin-top: 50vh;
+  transform: translateY(-50%);
+  text-align: center;
+}
+/* line 77, ../sass/screen.scss */
+.slide1 .content_slide1 p {
+  font-family: "Playfair Display", arial, serif;
+  color: #fff;
+  font-size: 75px;
+  line-height: 102px;
+  font-weight: 700;
+  letter-spacing: 5.625px;
+  margin-bottom: 120px;
+}
+@media only screen and (max-width: 768px) {
+  /* line 77, ../sass/screen.scss */
+  .slide1 .content_slide1 p {
+    font-size: 48px;
+    line-height: 65px;
+    margin-bottom: 80px;
+  }
+}
+/* line 91, ../sass/screen.scss */
+.slide1 .content_slide1 button {
+  font-family: 'Alegreya', arial, sans-serif;
+  font-weight: 700;
+  padding: 25px 80px 25px 80px;
+  color: #fff;
+  font-size: 33px;
+  letter-spacing: 9.9px;
+  text-transform: uppercase;
+  background-color: rgba(100, 100, 100, 0.5);
+  border: 2px dashed #9e9c93;
+  transition: 2s;
+}
+/* line 102, ../sass/screen.scss */
+.slide1 .content_slide1 button:hover {
+  background-color: rgba(100, 100, 100, 0.9);
+  border: 2px solid #9e9c93;
+  transition: 2s;
+}
+
+/* line 110, ../sass/screen.scss */
+.slide2 {
+  background-image: url(../img/background_content.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #fefefd;
+  padding: 70px 0 70px 0;
+  position: relative;
+}
+/* line 119, ../sass/screen.scss */
+.slide2 .content_slide2 .content_slide2_left {
+  text-align: center;
+  margin-top: 70px;
+}
+/* line 122, ../sass/screen.scss */
+.slide2 .content_slide2 .content_slide2_left h2 {
+  font-family: 'Alegreya', arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #56534c;
+  font-size: 48px;
+  line-height: 1.3em;
+}
+/* line 130, ../sass/screen.scss */
+.slide2 .content_slide2 .content_slide2_left h3 {
+  font-family: 'Alegreya', arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #a47d5e;
+  font-size: 25px;
+  line-height: 1.5em;
+}
+/* line 138, ../sass/screen.scss */
+.slide2 .content_slide2 .content_slide2_left p {
+  font-family: 'Montserrat', arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 1.4px;
+  color: #56534c;
+  font-size: 14px;
+  line-height: 1.5em;
+  margin-top: 60px;
+}
+/* line 149, ../sass/screen.scss */
+.slide2 .content_slide2 .content_slide2_right img {
+  margin: 0 auto;
+  margin-top: 70px;
+}
+
+/* line 156, ../sass/screen.scss */
+footer {
+  background-color: #3f3b39;
+  padding: 30px 0 30px 0;
+}
+/* line 159, ../sass/screen.scss */
+footer .content_footer {
+  text-align: center;
+}
+/* line 161, ../sass/screen.scss */
+footer .content_footer img {
+  padding-right: 30px;
+  padding-left: 30px;
+  height: 40px;
+}
+@media only screen and (max-width: 500px) {
+  /* line 161, ../sass/screen.scss */
+  footer .content_footer img {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+/* line 170, ../sass/screen.scss */
+footer .content_footer p {
+  font-family: 'Montserrat', arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5em;
+  color: #ffffff;
+  margin-top: 25px;
+}
