@@ -23,10 +23,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav nav-center">
-                <li class="active"><a href="{{ path('homepage') }}">Accueil ~<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Concours ~</a></li>
-                <li><a href="#">Magazine ~</a></li>
-                <li><a href="#">Jeu ~</a></li>
+                <li class="active"><a href="{{ path('homepage') }}">Accueil<span class="sr-only">(current)</span></a></li>
+                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
+                <li><a href="#">Concours</a></li>
+                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
+                <li><a href="#">Magazine</a></li>
+                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
+                <li><a href="#">Jeu</a></li>
+                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
                 <li><a href="{{ path('discutea_forum_homepage') }}">Forum ~</a></li>
                 {% if app.user %}
                     <li class="dropdown">
@@ -36,14 +40,16 @@
                             <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>
+                    <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
                 {% else %}
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Espace membre ~</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
-                        <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
-                    </ul>
-                </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Espace membre</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                            <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
+                        </ul>
+                    </li>
+                    <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
                 {% endif %}
                 <li><a href="#">Contact</a></li>
                 <li><img src="{{ asset('img/french.png') }}" alt="Site en français"></li>
