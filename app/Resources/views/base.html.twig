@@ -38,6 +38,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('app_user_affichermonprofil') }}">Mon profil</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                            {% if is_granted('ROLE_ADMIN')  %}
+                                <li><a href="{{ path('easyadmin') }}">Administration</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                     <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
