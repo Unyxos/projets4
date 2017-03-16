@@ -9,6 +9,7 @@ use Symfony\Component\Debug\Debug;
 //umask(0000);
 if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
     '192.168.33.1',
+    '127.0.0.1',
     '::1',
     '149.91.91.176',
 ))) {
