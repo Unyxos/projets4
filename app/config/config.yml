@@ -155,6 +155,7 @@ easy_admin:
                     - 'email'
                     - 'nom'
                     - 'prenom'
+                    - 'birthday'
                     - 'enabled'
                     - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_MODERATOR': 'ROLE_MODERATOR', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
                     - { property: 'imageFile', type: 'vich_image' }
