@@ -159,7 +159,7 @@ easy_admin:
                     - 'enabled'
                     - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_MODERATOR': 'ROLE_MODERATOR', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
                     - { property: 'imageFile', type: 'vich_image' }
-                    - { propertt: 'sexe', type: 'choice', type_options: { multiple: false, choices: {'Homme': 'homme', 'Femme': 'femme'} } }
+                    - { property: 'sexe', type: 'choice', type_options: { multiple: false, choices: {'Homme': 'homme', 'Femme': 'femme'} } }
                     - { property: 'parties_gagnees', type_options: { required: false }}
                     - { property: 'parties_perdues', type_options: { required: false }}
                     - { property: 'points', type_options: { required: false }}
