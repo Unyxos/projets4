@@ -93,12 +93,33 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="joueur1Id")
+     */
+    private $parties_1;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="joueur2Id")
+     */
+    private $parties_2;
+
+    private $parties;
+
     //Ici le __construct() appelle les éléments de FOS User Bundle par défaut, on y touche pas.
     public function __construct()
     {
         parent::__construct();
         // your own logic
         $this->roles = array('ROLE_RANG_1');
+        $this->parties_1 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parties_2 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parties = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getParties()
+    {
+        $this->parties[] = $this->parties_1;
+        $this->parties[] = $this->parties_2;
+        return $this->parties;
     }
 
     /**

@@ -1,0 +1,49 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/plateau.css') }}">
+    <div class="fond" style="margin-top: 109px">
+        <div class="zonejeu">
+            <div class="scores">
+                <div class="scoreAdv">
+                    0
+                </div>
+                <div class="scoreJoueur">
+                    0
+                </div>
+            </div>
+            <div class="points">
+                <div class="ptsAdv">
+                    0
+                </div>
+                <div class="ptsJoueur">
+                    0
+                </div>
+            </div>
+            <div class="pioche">
+                <img src="{{ asset('img/doscarte.png') }}"/>
+            </div>
+            <div class="cartesAdv">
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+                <img src="{{ asset('img/doscarte.png') }}"/>
+            </div>
+
+            <div class="cartesJoueur">
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+                <img src="{{ asset('img/carte-entree-1.png') }}"/>
+            </div>
+        </div>
+    </div>
+{% endblock %}

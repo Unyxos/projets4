@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app.request.locale }}">
 <head>
     <meta charset="UTF-8"/>
     <title>PROJET S4</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/screen.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/6b36206ea7.css">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -29,7 +30,7 @@
                 <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
                 <li><a href="#">Magazine</a></li>
                 <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                <li><a href="#">Jeu</a></li>
+                <li><a href="{{ path('jeu') }}">Jeu</a></li>
                 <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
                 <li><a href="{{ path('discutea_forum_homepage') }}">Forum ~</a></li>
                 {% if app.user %}

@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Partie
 {
+
     /**
      * @var int
      *
@@ -22,72 +23,67 @@ class Partie
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="joueur_1_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="parties_1")
      */
     private $joueur1Id;
-
     /**
-     * @var int
-     *
-     * @ORM\Column(name="joueur_2_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      */
     private $joueur2Id;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="main_joueur_1", type="simple_array", nullable=true)
+     * @ORM\Column(name="main_joueur_1", type="json_array", nullable=true)
      */
     private $mainJoueur1;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="main_joueur_2", type="simple_array", nullable=true)
+     * @ORM\Column(name="main_joueur_2", type="json_array", nullable=true)
      */
     private $mainJoueur2;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="partie_tour_joueur_id", type="integer")
+     * @ORM\Column(name="partie_tour_joueur_id", type="integer", nullable=true)
      */
     private $partieTourJoueurId;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="pioche", type="simple_array", nullable=true)
+     * @ORM\Column(name="pioche", type="json_array", nullable=true)
      */
     private $pioche;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="plateau_joueur_1", type="simple_array", nullable=true)
+     * @ORM\Column(name="plateau_joueur_1", type="json_array", nullable=true)
      */
     private $plateauJoueur1;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="plateau_joueur_2", type="simple_array", nullable=true)
+     * @ORM\Column(name="plateau_joueur_2", type="json_array", nullable=true)
      */
     private $plateauJoueur2;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="defausse", type="simple_array", nullable=true)
+     * @ORM\Column(name="defausse", type="json_array", nullable=true)
      */
     private $defausse;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="date_creation", type="string")
      */
     private $dateCreation;
 
@@ -112,6 +108,14 @@ class Partie
      */
     private $terminee;
 
+    public function __construct()
+    {
+        $this->dateCreation = date('Y-m-d H:i:s');
+        $this->scoreJoueur1 = 0;
+        $this->scoreJoueur2 = 0;
+        $this->terminee = 0;
+
+    }
 
     /**
      * Get id
@@ -124,47 +128,42 @@ class Partie
     }
 
     /**
-     * Set joueur1Id
+     * Set joueur1
      *
-     * @param integer $joueur1Id
+     * @param \AppBundle\Entity\User $joueur1Id
      *
      * @return Partie
      */
-    public function setJoueur1Id($joueur1Id)
+    public function setJoueur1Id(\AppBundle\Entity\User $joueur1Id = null)
     {
         $this->joueur1Id = $joueur1Id;
-
         return $this;
     }
-
     /**
      * Get joueur1Id
      *
-     * @return int
+     * @return \AppBundle\Entity\User
      */
     public function getJoueur1Id()
     {
         return $this->joueur1Id;
     }
-
     /**
      * Set joueur2Id
      *
-     * @param integer $joueur2Id
+     * @param \AppBundle\Entity\User $joueur2Id
      *
      * @return Partie
      */
-    public function setJoueur2Id($joueur2Id)
+    public function setJoueur2Id(\AppBundle\Entity\User $joueur2Id = null)
     {
         $this->joueur2Id = $joueur2Id;
-
         return $this;
     }
-
     /**
-     * Get joueur2Id
+     * Get joueur2
      *
-     * @return int
+     * @return \AppBundle\Entity\User
      */
     public function getJoueur2Id()
     {

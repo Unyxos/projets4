@@ -187,8 +187,17 @@ easy_admin:
                     - 'extra'
         Category:
             class: Discutea\DForumBundle\Entity\Category
+            form:
+                fields:
+                    - 'name'
         Forum:
             class: Discutea\DForumBundle\Entity\Forum
+            form:
+                fields:
+                    - 'name'
+                    - 'description'
+                    - 'position'
+                    - 'category'
         Parties:
             class: AppBundle\Entity\Partie
         Rang:

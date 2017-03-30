@@ -22,7 +22,7 @@ class DefaultController extends Controller
 
 
     /**
-     * @route ("/classement", name="classement")
+     * @Route ("/classement", name="classement")
      */
     public function classement()
     {
@@ -34,5 +34,13 @@ class DefaultController extends Controller
         return $this->render('default/classement.html.twig', array(
             'users' => $users,
         ));
+    }
+
+    /**
+     * @Route ("/jeu", name="jeu")
+     */
+    public function jeu()
+    {
+        return $this->render('parties/exemple-plateau.html.twig');
     }
 }
