@@ -1,8 +1,10 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
-{% block body %}
-    {{ form_start(create_form) }}
+    {% block body %}
+        <div style="margin-top: 130px">
+            {{ form_start(create_form) }}
             {{ form_widget(create_form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(create_form) }}
-{% endblock body %}
+            <input type="submit" value="Create" />
+            {{ form_end(create_form) }}
+        </div>
+    {% endblock body %}

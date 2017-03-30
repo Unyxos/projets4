@@ -1,0 +1,70 @@
+{% extends "DForumBundle::layout.html.twig" %}
+
+{% block title %}French Food Contest - Forum{% endblock %}
+
+{% block stylesheets %}
+<div class="container" style="margin-top: 130px;">
+
+</div>
+<style>
+.category {
+    padding-top:30px;
+    height:250px;
+    margin-top:20px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-top: 130px;">
+        <h1 class="text-center">{{ 'discutea.forum.forumlist'|trans }}</h1><br />
+        <div class="col-md-12">
+            {% for category in categories if is_granted('CanReadCategory', category) %}
+                <div style="background-color: #E72F5B; width: 100%; color: white; font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; border-radius: 4px 4px 0px 0px; margin-top: 20px;">
+                    <h2>{{ category.name }}</h2>
+                </div>
+                <div class="row">
+                    {% for forum in category.forums %}
+                            <div class="row" style="margin-left: 15px; margin-right: 15px; padding-top : 15px; padding-bottom: 15px; border-bottom: 1px solid darkgrey; border-left: 1px solid darkgrey; border-right: 1px solid darkgrey;">
+                                <div class="col-md-1 text-center">
+                                    <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 style="margin-bottom: 10px"><a style="color: #CF000F" href="{{ path('discutea_forum_topic', {'slug': forum.slug}) }}" title="{{ forum.name }}">{{ forum.name }}</a></h3>
+                                    <p style="font-size: 12px">{{ forum.description }}</p>
+                                </div>
+                                <div class="col-md-1 text-center">
+                                    {{ forum.topics.count }}<br />
+                                    Sujets
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    {% set lastTopic = dfLastTopicInForum(forum) %}
+                                    {% if lastTopic is not null %}
+                                        {% if lastTopic.posts.last.poster is not null %}
+                                            {% set username = lastTopic.posts.last.poster.username %}
+                                        {% else %}
+                                            {% set username = 'discutea.forum.deleted.user'|trans %}
+                                        {% endif %}
+                                        <a style="color: #E72F5B" class="lastComment" href="{{ dfLastPostPages(lastTopic.posts.last) }}">
+                                            <p>
+                                                {{ 'discutea.forum.lastpostby'|trans }} <strong>{{ username }}</strong>
+                                            <p/>
+                                            <p style="margin-top: 5px;">
+                                                {{ lastTopic.posts.last.date|date("d/m/Y H:i") }}
+                                            </p>
+                                        </a>
+                                    {% else %}
+                                        <p>{{ 'discutea.forum.null'|trans }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    {% else %}
+                        <p class="text-center"><a class="btn btn-primary" href="{{ path('discutea_forum_create_forum', {'id': category.id}) }}">{{ 'discutea.forum.category.addforum'|trans }}</a></p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center"><a class="btn btn-primary" href="{{ path('discutea_forum_create_category') }}"> {{ 'discutea.forum.category.createnew'|trans }} </a></p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,121 @@
+/* line 1, ../sass/screen.sass */
+body {
+  margin: 0;
+  padding: 0;
+}
+/* line 4, ../sass/screen.sass */
+body .fond {
+  margin: 0;
+  padding: 0;
+  background: url("../img/fond.jpg") center no-repeat;
+  background-size: cover;
+}
+/* line 9, ../sass/screen.sass */
+body .fond .zonejeu {
+  width: 1120px;
+  height: 630px;
+  background: url("../img/plateau.png") center no-repeat;
+  background-size: cover;
+  margin: auto;
+  position: relative;
+}
+/* line 16, ../sass/screen.sass */
+body .fond .zonejeu .cartesAdv {
+  position: absolute;
+  padding-top: 7px;
+  margin-left: 380px;
+  width: 340px;
+  text-align: center;
+}
+/* line 22, ../sass/screen.sass */
+body .fond .zonejeu .cartesAdv img {
+  margin-left: -25px;
+  height: 90px;
+  transform: rotate(180deg);
+  -moz-box-shadow: -2px -2px 5px 0px #222;
+  -webkit-box-shadow: -2px -2px 5px 0px #222;
+  -o-box-shadow: -2px -2px 5px 0px #222;
+  box-shadow: -2px -2px 5px 0px #222;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#222, Direction=315, Strength=5);
+}
+/* line 31, ../sass/screen.sass */
+body .fond .zonejeu .cartesJoueur {
+  padding-bottom: 7px;
+  margin-left: 380px;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 340px;
+}
+/* line 38, ../sass/screen.sass */
+body .fond .zonejeu .cartesJoueur img {
+  margin-left: -25px;
+  -moz-box-shadow: 2px 2px 5px 0px #222;
+  -webkit-box-shadow: 2px 2px 5px 0px #222;
+  -o-box-shadow: 2px 2px 5px 0px #222;
+  box-shadow: 2px 2px 5px 0px #222;
+}
+/* line 44, ../sass/screen.sass */
+body .fond .zonejeu .scores {
+  position: relative;
+}
+/* line 46, ../sass/screen.sass */
+body .fond .zonejeu .scores div {
+  border-radius: 100px;
+  background-color: #373636;
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  color: white;
+  line-height: 90px;
+  vertical-align: middle;
+  font-size: 40px;
+  position: absolute;
+}
+/* line 57, ../sass/screen.sass */
+body .fond .zonejeu .scores .scoreAdv {
+  margin-top: 51px;
+  margin-left: 94px;
+}
+/* line 60, ../sass/screen.sass */
+body .fond .zonejeu .scores .scoreJoueur {
+  left: 953px;
+  top: 451px;
+}
+/* line 65, ../sass/screen.sass */
+body .fond .zonejeu .points div {
+  position: absolute;
+  border-radius: 100px;
+  background-color: #373636;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  color: white;
+  line-height: 35px;
+  vertical-align: middle;
+  font-size: 20px;
+}
+/* line 77, ../sass/screen.sass */
+body .fond .zonejeu .points .ptsAdv {
+  left: 280px;
+  top: 170px;
+}
+/* line 80, ../sass/screen.sass */
+body .fond .zonejeu .points .ptsJoueur {
+  left: 745px;
+  top: 425px;
+}
+/* line 83, ../sass/screen.sass */
+body .fond .zonejeu .pioche {
+  position: absolute;
+  left: 962px;
+  top: 186px;
+}
+/* line 87, ../sass/screen.sass */
+body .fond .zonejeu .pioche img {
+  height: 90px;
+  -moz-box-shadow: 2px 2px 5px 0px #222;
+  -webkit-box-shadow: 2px 2px 5px 0px #222;
+  -o-box-shadow: 2px 2px 5px 0px #222;
+  box-shadow: 2px 2px 5px 0px #222;
+}

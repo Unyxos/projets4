@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div style="margin-top: 130px">
+        <h1>Parties list</h1>
+
+        <table class="table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Pointj1</th>
+                <th>Pointj2</th>
+                <th>Tourde</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for party in parties %}
+                <tr>
+                    <td><a href="#">{{ party.id }}</a></td>
+                    <td>{{ party.scoreJoueur1 }}</td>
+                    <td>{{ party.scoreJoueur2 }}</td>
+                    <td>{{ party.PartieTourJoueurId }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

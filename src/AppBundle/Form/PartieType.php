@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +15,10 @@ class PartieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('joueur1Id')
+            ->add('joueur1Id', EntityType::class, array(
+                'class' => 'AppBundle\Entity\User',
+                'choice_label' => 'username'
+            ))
         ;
     }
     
@@ -35,6 +39,5 @@ class PartieType extends AbstractType
     {
         return 'appbundle_partie';
     }
-
 
 }
