@@ -45,7 +45,7 @@ body .fond .zonejeu .cartesJoueur {
   position: absolute;
   bottom: 0;
   text-align: center;
-  width: 340px;
+  width: 370px;
 }
 /* line 38, ../sass/screen.sass */
 body .fond .zonejeu .cartesJoueur img {
