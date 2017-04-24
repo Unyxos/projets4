@@ -73,6 +73,9 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+    port:      "%mailer_port%"
+    encryption: "%mailer_encryption%"
+    auth_mode: "%mailer_auth_mode%"
     spool:     { type: memory }
 
 fos_user:
@@ -200,6 +203,12 @@ easy_admin:
                     - 'category'
         Parties:
             class: AppBundle\Entity\Partie
+            label: 'Liste des parties'
+            list:
+                actions:
+                  - { name: 'show', icon: 'search', label: 'Show' }
+                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
+                  - { name: 'delete', icon: 'times', label: 'Delete' }
         Rang:
             class: AppBundle\Entity\Rang
             lable: 'Rangs'

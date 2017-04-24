@@ -1,0 +1,561 @@
+<div class="row">
+    <div class="col-md-10">
+        <!--<table>
+                    {% for i in range(0, 7) %}
+                        <tr><img width="100px" src="{{ asset('images/cartes/doscarte.png') }}"/></tr>
+                    {% endfor %}
+                </table>-->
+        <table class="table table-bordered" style="width: 100%;">
+            <thead>
+            <tr>
+                <td>Apéritif</td>
+                <td>Entrée</td>
+                <td>Plat</td>
+                <td>Laitage</td>
+                <td>Dessert</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% if user.id == partie.joueur1Id.id %}
+                <tr>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.aperitif is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.aperitif %}
+                                <img style="margin-right: -85px; border: 1px solid #373737;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-aperitif" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.aperitif | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ1|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ1.aperitif %}
+                            <img style="margin-right: -85px; border: 1px solid #373737;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.entree is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.entree %}
+                                <img style="margin-right: -85px; border: 1px solid #26B271;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-entree" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.entree | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ1|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ1.entree %}
+                            <img style="margin-right: -85px; border: 1px solid #26B271;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.plat is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.plat %}
+                                <img style="margin-right: -85px; border: 1px solid #F17238;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-plat" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.plat | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ1|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ1.plat %}
+                            <img style="margin-right: -85px; border: 1px solid #F17238;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.laitage is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.laitage %}
+                                <img style="margin-right: -85px; border: 1px solid #39A4DA;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-laitage" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.laitage | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ1|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ1.laitage %}
+                            <img style="margin-right: -85px; border: 1px solid #39A4DA;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.dessert is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.dessert %}
+                                <img style="margin-right: -85px; border: 1px solid #EC3B66;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-dessert" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.dessert | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ1|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <!--<hr style="margin-bottom: 120px"/>-->
+                        <hr/>
+                        {% for carte in plateau.plateauJ1.dessert %}
+                            <img style="margin-right: -85px; border: 1px solid #EC3B66;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% elseif user.id == partie.joueur2Id.id %}
+                <tr>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.aperitif is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.aperitif %}
+                                <img style="margin-right: -85px; border: 1px solid #373737;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-aperitif" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.aperitif | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ2|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ2.aperitif %}
+                            <img style="margin-right: -85px; border: 1px solid #373737;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.entree is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.entree %}
+                                <img style="margin-right: -85px; border: 1px solid #26B271;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-entree" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.entree | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ2|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ2.entree %}
+                            <img style="margin-right: -85px; border: 1px solid #26B271;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.plat is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.plat %}
+                                <img style="margin-right: -85px; border: 1px solid #F17238;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-plat" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.plat | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ2|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ2.plat %}
+                            <img style="margin-right: -85px; border: 1px solid #F17238;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.laitage is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.laitage %}
+                                <img style="margin-right: -85px; border: 1px solid #39A4DA;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-laitage" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.laitage | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ2|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <hr/>
+                        {% for carte in plateau.plateauJ2.laitage %}
+                            <img style="margin-right: -85px; border: 1px solid #39A4DA;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                    <td width="20%">
+                        <h4>Défausse</h4>
+                        {% if plateau.defausse.dessert is empty %}
+                            Aucune carte dans la défausse.
+                        {% else %}
+                            {% for carte in plateau.defausse.dessert %}
+                                <img style="margin-right: -85px; border: 1px solid #EC3B66;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                     src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}"
+                                     width="100px"/>
+                            {% endfor %}
+                            <form id="def-dessert" method="post"
+                                  action="{{ path('piocher_carte_defausse', {partie: partie.id}) }}">
+                                <input type="number" name="carte_id" hidden
+                                       value="{{ plateau.defausse.dessert | last }}">
+                                <button class="btn btn-info" type="submit" {% if plateau.mainJ2|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher la carte.</button>
+                            </form>
+                        {% endif %}
+                        <!--<hr style="margin-bottom: 120px"/>-->
+                        <hr/>
+                        {% for carte in plateau.plateauJ2.dessert %}
+                            <img style="margin-right: -85px; border: 1px solid #EC3B66;border-radius: 8px; border-spacing: 50px; padding-top : -50px"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100px"/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2">
+        <table class="table table-bordered">
+            <tr>
+                <td style="text-align: center">
+                    <b>Joueur 1</b>
+                </td>
+                <td style="text-align: center">
+                    <b>Joueur 2</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ partie.joueur1Id }}
+                </td>
+                <td>
+                    {{ partie.joueur2Id }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ partie.scoreJoueur1 }} points
+                </td>
+                <td>
+                    {{ partie.scoreJoueur2 }} points
+                </td>
+            </tr>
+        </table>
+        {% if user.id == partie.joueur1Id.id %}
+            <form id="fin-tour" method="post" action="{{ path('changer_tour', {partie: partie.id}) }}">
+                <button type="submit" class="btn btn-info" {% if partie.compteurActionTour != 2 %} disabled {% endif %} {% if partie.partieTourJoueurId == partie.joueur2Id.id %} disabled {% endif %}>Finir mon tour !</button>
+            </form>
+        {% elseif user.id == partie.joueur2Id.id %}
+            <form id="fin-tour" method="post" action="{{ path('changer_tour', {partie: partie.id}) }}">
+                <button type="submit" class="btn btn-info"{% if partie.compteurActionTour != 2 %} disabled {% endif %} {% if partie.partieTourJoueurId == partie.joueur1Id.id %} disabled {% endif %}>Finir mon tour !</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <hr/>
+        <h3>Main : {{ plateau.mainJ1|length }}/8 cartes. - {{ partie.compteurActionTour }} actions jouée(s)</h3><br/>
+        {% if user.id == partie.joueur1Id.id %}
+        <table>
+            <tr>
+                {% for carte in plateau.mainJ1 %}
+                    <td style="padding: 5px;">
+                        {% if cartes[carte].categorie == "aperitif" %}
+                            <img style="border: 1px solid #373737;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "entree" %}
+                            <img style="border: 1px solid #26B271;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "plat" %}
+                            <img style="border: 1px solid #F17238;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "laitage" %}
+                            <img style="border: 1px solid #39A4DA;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "dessert" %}
+                            <img style="border: 1px solid #EC3B66;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% endif %}
+                        <table>
+                            <tr>
+                                <td style="padding: 3px;">
+                                    <form id="poser{{ cartes[carte].id }}" method="POST"
+                                          action="{{ path('poser_carte', {partie: partie.id}) }}">
+                                        <input name="carte_id" type="number" value="{{ cartes[carte].id }}"
+                                               hidden>
+                                        <button class="btn btn-success" type="submit" {% if plateau.mainJ1|length < 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %} {% if partie.partieTourJoueurId == partie.joueur2Id.id %} disabled {% endif %}>Poser
+                                        </button>
+                                    </form>
+                                </td>
+                                <td style="padding: 3px;">
+                                    <form id="def{{ cartes[carte].id }}" method="POST"
+                                          action="{{ path('defausser_carte', {partie: partie.id}) }}">
+                                        <input name="carte_id" type="number" value="{{ cartes[carte].id }}"
+                                               hidden>
+                                        <button class="btn btn-warning" type="submit" {% if plateau.mainJ1|length < 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %} {% if partie.partieTourJoueurId == partie.joueur2Id.id %} disabled {% endif %}>Défausser</button>
+                                    </form>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('#poser{{ cartes[carte].id }}').on('submit', function (e) {
+                                                e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+                                                var $this = $(this); // L'objet jQuery du formulaire
+
+                                                // Envoi de la requête HTTP en mode asynchrone
+                                                $old.ajax({
+                                                    url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                                                    type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                                                    data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+                                                });
+                                            });
+                                            $('#def{{ cartes[carte].id }}').on('submit', function (e) {
+                                                e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+                                                var $this = $(this); // L'objet jQuery du formulaire
+
+                                                // Envoi de la requête HTTP en mode asynchrone
+                                                $old.ajax({
+                                                    url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                                                    type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                                                    data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    {% elseif user.id == partie.joueur2Id.id %}
+        <table>
+            <tr>
+                {% for carte in plateau.mainJ2 %}
+                    <td style="padding: 5px;">
+                        {% if cartes[carte].categorie == "aperitif" %}
+                            <img style="border: 1px solid #373737;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "entree" %}
+                            <img style="border: 1px solid #26B271;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "plat" %}
+                            <img style="border: 1px solid #F17238;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "laitage" %}
+                            <img style="border: 1px solid #39A4DA;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% elseif cartes[carte].categorie == "dessert" %}
+                            <img style="border: 1px solid #EC3B66;border-radius: 16px;"
+                                 src="{{ asset('images/cartes/' ~ cartes[carte].imagename) }}" width="100%"/>
+                        {% endif %}
+                        <table>
+                            <tr>
+                                <td style="padding: 3px;">
+                                    <form id="poser{{ cartes[carte].id }}" method="POST"
+                                          action="{{ path('poser_carte', {partie: partie.id}) }}">
+                                        <input name="carte_id" type="number" value="{{ cartes[carte].id }}"
+                                               hidden>
+                                        <button class="btn btn-success"
+                                                type="submit" {% if plateau.mainJ2|length < 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %} {% if partie.partieTourJoueurId == partie.joueur1Id.id %} disabled {% endif %}>
+                                            Poser
+                                        </button>
+                                    </form>
+                                </td>
+                                <td style="padding: 3px;">
+                                    <form id="def{{ cartes[carte].id }}" method="POST"
+                                          action="{{ path('defausser_carte', {partie: partie.id}) }}">
+                                        <input name="carte_id" type="number" value="{{ cartes[carte].id }}"
+                                               hidden>
+                                        <button class="btn btn-warning" type="submit" {% if plateau.mainJ2|length < 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %} {% if partie.partieTourJoueurId == partie.joueur1Id.id %} disabled {% endif %}>Défausser</button>
+                                    </form>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('#poser{{ cartes[carte].id }}').on('submit', function (e) {
+                                                e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+                                                var $this = $(this); // L'objet jQuery du formulaire
+
+                                                // Envoi de la requête HTTP en mode asynchrone
+                                                $old.ajax({
+                                                    url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                                                    type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                                                    data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+                                                });
+                                            });
+                                            $('#def{{ cartes[carte].id }}').on('submit', function (e) {
+                                                e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+                                                var $this = $(this); // L'objet jQuery du formulaire
+
+                                                // Envoi de la requête HTTP en mode asynchrone
+                                                $old.ajax({
+                                                    url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                                                    type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                                                    data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+        {% endif %}<br/>
+    </div>
+    <div class="col-md-2">
+        <hr/>
+        <img height="260px" style="border: 1px solid #363636; border-radius: 16px; margin-top: 5px;"
+             src="{{ asset('img/doscarte.png') }}"><br/>
+        {% if user.id == partie.joueur1Id.id %}
+            <form id="pioche" method="POST" action="{{ path('piocher_carte_pioche', {partie: partie.id}) }}">
+                <button class="btn btn-info" type="submit" {% if plateau.mainJ1|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher !
+                    ({{ plateau.pioche | length }} Cartes)
+                </button>
+            </form>
+        {% elseif user.id == partie.joueur2Id.id %}
+            <form id="pioche" method="POST" action="{{ path('piocher_carte_pioche', {partie: partie.id}) }}">
+                <button class="btn btn-info" type="submit" {% if plateau.mainJ2|length == 8 %} disabled {% endif %} {% if partie.compteurActionTour == 2 %} disabled {% endif %}>Piocher !
+                    ({{ plateau.pioche | length }} Cartes)
+                </button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#pioche').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+        $('#def-aperitif').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+        $('#def-entree').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+        $('#def-plat').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+        $('#def-laitage').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+        $('#def-dessert').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+        $('#fin-tour').on('submit', function (e) {
+            e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+            var $this = $(this); // L'objet jQuery du formulaire
+
+            // Envoi de la requête HTTP en mode asynchrone
+            $old.ajax({
+                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+            });
+        });
+    });
+</script>

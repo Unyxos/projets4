@@ -27,7 +27,7 @@ class Partie
      */
     private $joueur1Id;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="parties_2")
      */
     private $joueur2Id;
 
@@ -48,9 +48,16 @@ class Partie
     /**
      * @var int
      *
-     * @ORM\Column(name="partie_tour_joueur_id", type="integer", nullable=true)
+     * @ORM\Column(name="partie_tour_joueur_id", type="integer")
      */
     private $partieTourJoueurId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="partie_compteur_action_tour", type="integer")
+     */
+    private $compteurActionTour;
 
     /**
      * @var array
@@ -432,6 +439,30 @@ class Partie
     public function getTerminee()
     {
         return $this->terminee;
+    }
+
+    /**
+     * Set compteuractiontour
+     *
+     * @param integer $compteurActionTour
+     *
+     * @return Partie
+     */
+    public function setCompteurActionTour($compteurActionTour)
+    {
+        $this->compteurActionTour = $compteurActionTour;
+
+        return $this;
+    }
+
+    /**
+     * Get compteuractiontour
+     *
+     * @return int
+     */
+    public function getCompteurActionTour()
+    {
+        return $this->compteurActionTour;
     }
 }
 

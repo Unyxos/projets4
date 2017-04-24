@@ -1,0 +1,16 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    <div class="container-fluid" style="margin-top: 130px; text-align: center">
+        <div id="jeu">
+            <!-- Affiche le plateau grâce à l'ajax -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            setInterval(function () {
+                $old("#jeu").load("{{ path('afficher_jeu', {id: partie.id}) }}");
+            }, 1500);
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>French Food Contest - Mail</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <style>
+        .mail {
+            font-family: Nunito, sans-serif;
+        }
+        .footer {
+            margin-top: 30px;
+            background-color: #b6dddd;
+            color: #fff;
+            height: 80px;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table class="mail">
+        {% block body %}{% endblock %}
+        <tr class="footer">
+            <td>
+                <p style="font-size: 26px">© French Food Contest</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

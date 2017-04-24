@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class CartesRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAll()
+    {
+        return $this->createQueryBuilder('c')
+            ->indexBy('c','c.id')
+            ->getQuery()
+            ->getResult();
+    }
 }

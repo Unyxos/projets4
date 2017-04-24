@@ -22,35 +22,35 @@ class Cartes
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="categorie", type="string", length=255)
      */
-    private $categorie;
+    protected $categorie;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var int
      *
      * @ORM\Column(name="valeur", type="integer")
      */
-    private $valeur;
+    protected $valeur;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="extra", type="boolean")
      */
-    private $extra;
+    protected $extra;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -59,21 +59,21 @@ class Cartes
      *
      * @var File
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $imageName;
+    protected $imageName;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
 
 
     /**

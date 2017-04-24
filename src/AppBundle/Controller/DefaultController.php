@@ -43,4 +43,11 @@ class DefaultController extends Controller
     {
         return $this->render('parties/exemple-plateau.html.twig');
     }
+
+    /**
+     * @Route ("/mail")
+     */
+    public function mailpreview(){
+        return $this->render('mail/partie/creation_partie/mail_joueur_qui_invite.html.twig');
+    }
 }

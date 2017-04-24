@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/screen.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/6b36206ea7.css">
+    {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script> $old = jQuery.noConflict();</script>
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    {% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -63,10 +69,5 @@
     </div><!-- /.container-fluid -->
 </nav>
             {% block body %}{% endblock %}
-
-        {% block javascripts %}
-            <script src="{{ asset('js/jquery.js') }}"></script>
-            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        {% endblock %}
     </body>
 </html>
