@@ -1,0 +1,55 @@
+{% extends('mail/base-mail.html.twig') %}
+
+{% block body %}
+    <style>
+        .bouton-lien {
+            border: 3px solid #373737;
+            padding: 8px;
+            background-color: white;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .corps {
+            margin-top: 30px;
+            text-align: center !important;
+            font-size: 16px;
+            padding: 15px;
+        }
+        .separateur {
+            border: none;
+            height: 3px;
+            color: #373737;
+            background-color: #373737;
+            margin-top: 40px
+        }
+        a {
+            color: #0d6aad;
+            text-decoration: none;
+        }
+    </style>
+    <tr>
+        <td align="center">
+            <img width="200px" style="margin-top: 20px" src="https://i.corentincloss.fr/qatLCPAL.png">
+            <hr class="separateur" style="margin-top: 20px;"/>
+            <h2 style="font-weight: bold; margin-top: 45px; margin-bottom: 45px">Invitation à une partie !</h2>
+            <hr class="separateur"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="corps">
+            Salut <strong>{{ joueur2 }}</strong> !<br/>
+            Le joueur <a target="_blank" href="#"><strong>{{ joueur1 }}</strong></a> vient de défier sur notre site !<br/><br/>
+            Seras-tu le ou la plus fort(e) ? Grimperas-tu les rangs pour gagner des supers cadeaux ? À toi de voir !<br/><br/><br/>
+            Pour accéder à la partie, clique sur le bouton ci-dessous :<br/>
+            <a style="color: #373737" target="_blank"
+               href="http://192.168.33.42/projets4/web/app_dev.php/partie/afficher/{{ id }}">
+                <button style="font-size: 16px; font-family: Nunito, sans-serif; font-weight: bold;" class="bouton-lien">Accéder à la partie !</button>
+            </a><br/>
+            Ou utilise le lien suivant : <a target="_blank" href="http://192.168.33.42/projets4/web/app_dev.php/partie/afficher/{{ id }}">http://192.168.33.42/projets4/web/app_dev.php/partie/afficher/{{ id }}</a><br/>
+            Tu peux aussi retrouver toutes tes parties directement sur notre site, dans la rubrique
+            "Jeu".<br/><br/><br/>
+            Bon jeu et à la prochaine !<br/>
+            L'équipe French Food Contest.
+        </td>
+    </tr>
+{% endblock %}

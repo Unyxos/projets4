@@ -15,7 +15,7 @@ class PartieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('joueur1Id', EntityType::class, array(
+            ->add('joueur2Id', EntityType::class, array(
                 'class' => 'AppBundle\Entity\User',
                 'choice_label' => 'username'
             ))

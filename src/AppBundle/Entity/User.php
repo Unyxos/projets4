@@ -97,6 +97,7 @@ class User extends BaseUser implements ParticipantInterface
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="joueur1Id")
      */
     private $parties_1;
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partie", mappedBy="joueur2Id")
      */
