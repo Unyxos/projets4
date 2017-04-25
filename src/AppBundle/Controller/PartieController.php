@@ -20,7 +20,7 @@ class PartieController extends Controller
     /**
      * Lists all party entities.
      *
-     * @Route("/", name="admin_parties_index")
+     * @Route("/", name="parties_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -125,7 +125,7 @@ class PartieController extends Controller
                 );
             $this->get('mailer')->send($message2);
 
-            return $this->redirectToRoute('admin_parties_index', array('id' => $partie->getId()));
+            return $this->redirectToRoute('parties_index', array('id' => $partie->getId()));
         }
 
         return $this->render('parties/creer-partie.html.twig', array(
@@ -197,8 +197,8 @@ class PartieController extends Controller
                 if ($carte->getExtra() == 1) {
                     //si la carte est une carte extra
                     //on vérifie que la dernière carte posée est une carte extra
-                    if (self::getCarte(end($plateauJ1[$carte->getCategorie()]))->getExtra() == 1) {
-                        //on ajoute la carte
+                    if(empty($plateauJ1[$carte->getCategorie()])){
+                        //On ajoute la carte
                         array_push($plateauJ1[$carte->getCategorie()], $cartePoseeTrait);
                         $partie->setPlateauJoueur1(json_encode($plateauJ1));
 
@@ -211,9 +211,24 @@ class PartieController extends Controller
                         $em->persist($partie);
                         $em->flush();
                     } else {
-                        /**
-                         * Flashbag disant que la dernière carte n'est pas une carte extra -> on ne peut pas poser
-                         */
+                        if (self::getCarte(end($plateauJ1[$carte->getCategorie()]))->getExtra() == 1) {
+                            //on ajoute la carte
+                            array_push($plateauJ1[$carte->getCategorie()], $cartePoseeTrait);
+                            $partie->setPlateauJoueur1(json_encode($plateauJ1));
+
+                            if (($key = array_search($cartePoseeTrait, $mainJ1)) !== false) {
+                                unset($mainJ1[$key]);
+                            }
+                            $partie->setMainJoueur1(json_encode(array_values($mainJ1)));
+                            $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
+
+                            $em->persist($partie);
+                            $em->flush();
+                        } else {
+                            /**
+                             * Flashbag disant que la dernière carte n'est pas une carte extra -> on ne peut pas poser
+                             */
+                        }
                     }
                 } else {
                     //si la carte n'est pas une carte extra
@@ -684,7 +699,14 @@ class PartieController extends Controller
                 $em->flush();
             }
         }
-        return $this->redirectToRoute('afficher_partie', array('id' => $partie->getId()));
+        return $this->redirectToRoute('fin_partie', array('id' => $partie->getId()));
+    }
+
+    /**
+     * @Route("/fin/{partie}", name="fin_partie")
+     */
+    public function finPartie(Partie $partie){
+        $this->renderView(':parties:fin-partie.html.twig');
     }
 
 }
