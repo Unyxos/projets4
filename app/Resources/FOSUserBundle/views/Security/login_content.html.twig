@@ -1,0 +1,63 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+{% block divpage %}
+<div class="page-connexion">
+{% endblock %}
+<section class="content-connexion" style="margin-top: -120px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="cercleConnexion">
+                    <div class="cadenas">
+                        <img src="{{ asset('img/cadenas.png') }}" alt="">
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padd cercleConnexionLeft">
+                        <h2>Se connecter</h2>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                            <form action="{{ path("fos_user_security_check") }}" id="formConnexion" method="post">
+                                {% if csrf_token %}
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                {% endif %}
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                                    <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Nom d'utilisateur" required="required" />
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                                    <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required" />
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                                    <input class="btnConnexion" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                    <span class="middleChoice">ou</span>
+                    <div class="MiddleTrait"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padd cercleConnexionRight">
+                        <h2>Pas encore inscrit ?</h2>
+                        <p class="joinUs">Rejoingnez l’aventure et bénéficiez de nos nombreux services en vous inscrivant sur notre site.</p>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd btnInscription">
+                                <a href="{{ path('fos_user_registration_register') }}" title="page inscription">Inscription</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Chat;
 use AppBundle\Entity\Partie;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Cartes;
@@ -36,7 +37,8 @@ class PartieController extends Controller
      * @Route("/creer")
      * @Method({"GET", "POST"})
      */
-    public function createPartie(Request $request){
+    public function createPartie(Request $request)
+    {
         $user = $this->getUser();
         $userid = $user->getId();
         $partie = new Partie();
@@ -44,27 +46,25 @@ class PartieController extends Controller
         $createForm = $this->createForm('AppBundle\Form\PartieType', $partie);
         $createForm->handleRequest($request);
 
-        if($createForm->isSubmitted() && $createForm->isValid()){
+        if ($createForm->isSubmitted() && $createForm->isValid()) {
             $partie->setJoueur1Id($user);
             $cartes = $this->getDoctrine()->getRepository('AppBundle:Cartes')->findAll();
             shuffle($cartes);
 
             $t = array();
-            for ($i=0; $i<8; $i++){
+            for ($i = 0; $i < 8; $i++) {
                 $t[] = $cartes[$i]->getId();
             }
 
             $partie->setMainJoueur1(json_encode($t));
 
             $t = array();
-            for($i = 8; $i<16; $i++)
-            {
+            for ($i = 8; $i < 16; $i++) {
                 $t[] = $cartes[$i]->getId();
             }
             $partie->setMainJoueur2(json_encode($t));
             $t = array();
-            for($i = 16; $i<count($cartes); $i++)
-            {
+            for ($i = 16; $i < count($cartes); $i++) {
                 $t[] = $cartes[$i]->getId();
             }
 
@@ -93,7 +93,7 @@ class PartieController extends Controller
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Invitation à une partie !')
-                ->setFrom('no-reply@dev.corentincloss.fr')
+                ->setFrom('frenchfoodcontest@corentincloss.fr')
                 ->setTo($partie->getJoueur2Id()->getEmail())
                 ->setBody(
                     $this->renderView(
@@ -110,7 +110,7 @@ class PartieController extends Controller
 
             $message2 = \Swift_Message::newInstance()
                 ->setSubject('Invitation à une partie !')
-                ->setFrom('no-reply@dev.corentincloss.fr')
+                ->setFrom('frenchfoodcontest@corentincloss.fr')
                 ->setTo($partie->getJoueur1Id()->getEmail())
                 ->setBody(
                     $this->renderView(
@@ -125,7 +125,7 @@ class PartieController extends Controller
                 );
             $this->get('mailer')->send($message2);
 
-            return $this->redirectToRoute('parties_index', array('id' => $partie->getId()));
+            return $this->redirectToRoute('afficher_partie', array('id' => $partie->getId()));
         }
 
         return $this->render('parties/creer-partie.html.twig', array(
@@ -138,13 +138,16 @@ class PartieController extends Controller
      * @Route("/afficher/{id}", name="afficher_partie")
      * @Method("GET")
      */
-    public function afficherPartie(Partie $id){
+    public function afficherPartie(Partie $id)
+    {
         $user = $this->getUser();
         $userid = $this->getUser()->getId();
 
-        //var_dump($user->getEmail());
+        if ($id->getTerminee() == 1) {
+            return $this->redirectToRoute('partie_terminee');
+        }
 
-        if ($userid == $id->getJoueur1Id()->getId() || $userid == $id->getJoueur2Id()->getId()){
+        if ($userid == $id->getJoueur1Id()->getId() || $userid == $id->getJoueur2Id()->getId()) {
             $cartes = $this->getDoctrine()->getRepository('AppBundle:Cartes')->getAll();
 
             $plateau['mainJ1'] = json_decode($id->getMainJoueur1());
@@ -166,7 +169,8 @@ class PartieController extends Controller
         return $this->render('parties/erreurs/non-joueur.html.twig');
     }
 
-    public function getCarte($id){
+    public function getCarte($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $carte = $em->getRepository('AppBundle:Cartes')->findOneById($id);
         return $carte;
@@ -175,7 +179,8 @@ class PartieController extends Controller
     /**
      * @Route("/poser/{partie}", name="poser_carte")
      */
-    public function poserCarte(Request $request, Partie $partie){
+    public function poserCarte(Request $request, Partie $partie)
+    {
         $cartePosee = $request->request->all();
         $cartePoseeTrait = $cartePosee['carte_id'];
 
@@ -197,7 +202,7 @@ class PartieController extends Controller
                 if ($carte->getExtra() == 1) {
                     //si la carte est une carte extra
                     //on vérifie que la dernière carte posée est une carte extra
-                    if(empty($plateauJ1[$carte->getCategorie()])){
+                    if (empty($plateauJ1[$carte->getCategorie()])) {
                         //On ajoute la carte
                         array_push($plateauJ1[$carte->getCategorie()], $cartePoseeTrait);
                         $partie->setPlateauJoueur1(json_encode($plateauJ1));
@@ -228,6 +233,9 @@ class PartieController extends Controller
                             /**
                              * Flashbag disant que la dernière carte n'est pas une carte extra -> on ne peut pas poser
                              */
+                            $this->get('session')->getFlashBag()->add('error',
+                                'Vous ne pouvez pas poser une carte extra si la carte précédente n\'est pas une carte extra.'
+                            );
                         }
                     }
                 } else {
@@ -267,13 +275,16 @@ class PartieController extends Controller
                             /**
                              * Flashbag disant que la dernière carte a une valeur supérieure à la carte posée
                              */
+                            $this->get('session')->getFlashBag()->add('error',
+                                'Vous ne pouvez pas poser une carte dont la valeur est inférieure à la carte précédente.'
+                            );
                         }
                     }
                 }
             } else {
                 //on dit que la carte est pas dans la main
             }
-        } elseif ($tourde == $joueur2){
+        } elseif ($tourde == $joueur2) {
             $mainJ2 = json_decode($partie->getMainJoueur2());
 
             //On vérifie que la carte est dans la main du joueur
@@ -282,8 +293,8 @@ class PartieController extends Controller
                 if ($carte->getExtra() == 1) {
                     //si la carte est une carte extra
                     //on vérifie que la dernière carte posée est une carte extra
-                    if (self::getCarte(end($plateauJ2[$carte->getCategorie()]))->getExtra() == 1) {
-                        //on ajoute la carte
+                    if (empty($plateauJ2[$carte->getCategorie()])) {
+                        //On ajoute la carte
                         array_push($plateauJ2[$carte->getCategorie()], $cartePoseeTrait);
                         $partie->setPlateauJoueur2(json_encode($plateauJ2));
 
@@ -296,9 +307,27 @@ class PartieController extends Controller
                         $em->persist($partie);
                         $em->flush();
                     } else {
-                        /**
-                         * Flashbag disant que la dernière carte n'est pas une carte extra -> on ne peut pas poser
-                         */
+                        if (self::getCarte(end($plateauJ2[$carte->getCategorie()]))->getExtra() == 1) {
+                            //on ajoute la carte
+                            array_push($plateauJ2[$carte->getCategorie()], $cartePoseeTrait);
+                            $partie->setPlateauJoueur2(json_encode($plateauJ2));
+
+                            if (($key = array_search($cartePoseeTrait, $mainJ2)) !== false) {
+                                unset($mainJ2[$key]);
+                            }
+                            $partie->setMainJoueur2(json_encode(array_values($mainJ2)));
+                            $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
+
+                            $em->persist($partie);
+                            $em->flush();
+                        } else {
+                            /**
+                             * Flashbag disant que la dernière carte n'est pas une carte extra -> on ne peut pas poser
+                             */
+                            $this->get('session')->getFlashBag()->add('error',
+                                'Vous ne pouvez pas poser une carte extra si la carte précédente n\'est pas une carte extra.'
+                            );
+                        }
                     }
                 } else {
                     //si la carte n'est pas une carte extra
@@ -337,6 +366,9 @@ class PartieController extends Controller
                             /**
                              * Flashbag disant que la dernière carte a une valeur supérieure à la carte posée
                              */
+                            $this->get('session')->getFlashBag()->add('error',
+                                'Vous ne pouvez pas poser une carte dont la valeur est inférieure à la carte précédente.'
+                            );
                         }
                     }
                 }
@@ -352,7 +384,8 @@ class PartieController extends Controller
     /**
      * @Route("/piocher/pioche/{partie}", name="piocher_carte_pioche")
      */
-    public function piocherPioche(Request $request, Partie $partie){
+    public function piocherPioche(Request $request, Partie $partie)
+    {
         //TODO : piocher une carte dans le tableau des cartes et l'ajouter à la liste des cartes
         $tourde = $partie->getPartieTourJoueurId();
         $mainJ1 = json_decode($partie->getMainJoueur1());
@@ -363,14 +396,14 @@ class PartieController extends Controller
 
         $cartePiochee = end($pioche);
         echo $cartePiochee;
-        if($tourde == $joueur1){
-            if (count($mainJ1) == 7){
+        if ($tourde == $joueur1) {
+            if (count($mainJ1) == 7) {
                 //on continue
                 array_push($mainJ1, $cartePiochee);
                 $partie->setMainJoueur1(json_encode($mainJ1));
                 array_pop($pioche);
                 $partie->setPioche(json_encode($pioche));
-                $partie->setCompteurActionTour($partie->getCompteurActionTour()+1);
+                $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($partie);
                 $em->flush();
@@ -379,13 +412,13 @@ class PartieController extends Controller
             }
 
         } elseif ($tourde == $joueur2) {
-            if (count($mainJ2) == 7){
+            if (count($mainJ2) == 7) {
                 //on continue
                 array_push($mainJ2, $cartePiochee);
                 $partie->setMainJoueur2(json_encode($mainJ2));
                 array_pop($pioche);
                 $partie->setPioche(json_encode($pioche));
-                $partie->setCompteurActionTour($partie->getCompteurActionTour()+1);
+                $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($partie);
                 $em->flush();
@@ -402,7 +435,8 @@ class PartieController extends Controller
     /**
      * @Route("/defausser/{partie}", name="defausser_carte")
      */
-    public function poserDefausse(Request $request, Partie $partie){
+    public function poserDefausse(Request $request, Partie $partie)
+    {
         $cartePosee = $request->request->all();
         $cartePoseeTrait = $cartePosee['carte_id'];
         $tourde = $partie->getPartieTourJoueurId();
@@ -415,17 +449,17 @@ class PartieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $carte = $em->getRepository('AppBundle:Cartes')->findOneById($cartePoseeTrait);
 
-        if($tourde == $joueur1){
-            if (in_array($cartePoseeTrait, $mainJ1)){
+        if ($tourde == $joueur1) {
+            if (in_array($cartePoseeTrait, $mainJ1)) {
                 array_push($defausse[$carte->getCategorie()], $cartePoseeTrait);
 
-                if(($key = array_search($cartePoseeTrait, $mainJ1)) !== false) {
+                if (($key = array_search($cartePoseeTrait, $mainJ1)) !== false) {
                     unset($mainJ1[$key]);
                 }
 
                 $partie->setDefausse(json_encode($defausse));
                 $partie->setMainJoueur1(json_encode(array_values($mainJ1)));
-                $partie->setCompteurActionTour($partie->getCompteurActionTour()+1);
+                $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($partie);
                 $em->flush();
@@ -433,17 +467,17 @@ class PartieController extends Controller
             } else {
 
             }
-        } elseif($tourde == $joueur2) {
-            if (in_array($cartePoseeTrait, $mainJ2)){
+        } elseif ($tourde == $joueur2) {
+            if (in_array($cartePoseeTrait, $mainJ2)) {
                 array_push($defausse[$carte->getCategorie()], $cartePoseeTrait);
 
-                if(($key = array_search($cartePoseeTrait, $mainJ2)) !== false) {
+                if (($key = array_search($cartePoseeTrait, $mainJ2)) !== false) {
                     unset($mainJ2[$key]);
                 }
 
                 $partie->setDefausse(json_encode($defausse));
                 $partie->setMainJoueur2(json_encode(array_values($mainJ2)));
-                $partie->setCompteurActionTour($partie->getCompteurActionTour()+1);
+                $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($partie);
                 $em->flush();
@@ -460,7 +494,8 @@ class PartieController extends Controller
     /**
      * @Route("/piocher/defausse/{partie}", name="piocher_carte_defausse")
      */
-    public function piocherDefausse(Request $request, Partie $partie){
+    public function piocherDefausse(Request $request, Partie $partie)
+    {
         $cartePosee = $request->request->all();
         $cartePiocheeTrait = $cartePosee['carte_id'];
         $tourde = $partie->getPartieTourJoueurId();
@@ -472,25 +507,25 @@ class PartieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $carte = $em->getRepository('AppBundle:Cartes')->findOneById($cartePiocheeTrait);
         $categorie_carte = $carte->getCategorie();
-        if($tourde == $joueur1){
-            if(end($defausse[$categorie_carte]) == $cartePiocheeTrait){
+        if ($tourde == $joueur1) {
+            if (end($defausse[$categorie_carte]) == $cartePiocheeTrait) {
                 array_push($mainJ1, $cartePiocheeTrait);
                 $partie->setMainJoueur1(json_encode($mainJ1));
                 array_pop($defausse[$categorie_carte]);
                 $partie->setDefausse(json_encode($defausse));
-                $partie->setCompteurActionTour($partie->getCompteurActionTour()+1);
+                $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
                 $em->persist($partie);
                 $em->flush();
             } else {
 
             }
         } elseif ($tourde == $joueur2) {
-            if(end($defausse[$categorie_carte]) == $cartePiocheeTrait){
+            if (end($defausse[$categorie_carte]) == $cartePiocheeTrait) {
                 array_push($mainJ2, $cartePiocheeTrait);
                 $partie->setMainJoueur2(json_encode($mainJ2));
                 array_pop($defausse[$categorie_carte]);
                 $partie->setDefausse(json_encode($defausse));
-                $partie->setCompteurActionTour($partie->getCompteurActionTour()+1);
+                $partie->setCompteurActionTour($partie->getCompteurActionTour() + 1);
                 $em->persist($partie);
                 $em->flush();
             } else {
@@ -507,11 +542,12 @@ class PartieController extends Controller
      * @Route("/afficher/jeu/{id}", name="afficher_jeu")
      * @Method("GET")
      */
-    public function afficherJeu(Partie $id){
+    public function afficherJeu(Partie $id)
+    {
         $user = $this->getUser();
         $userid = $this->getUser()->getId();
 
-        if ($userid == $id->getJoueur1Id()->getId() || $userid == $id->getJoueur2Id()->getId()){
+        if ($userid == $id->getJoueur1Id()->getId() || $userid == $id->getJoueur2Id()->getId()) {
             $cartes = $this->getDoctrine()->getRepository('AppBundle:Cartes')->getAll();
 
             $plateau['mainJ1'] = json_decode($id->getMainJoueur1());
@@ -536,7 +572,8 @@ class PartieController extends Controller
     /**
      * @Route("/changertour/{partie}", name="changer_tour")
      */
-    public function changerTour(Request $request, Partie $partie){
+    public function changerTour(Request $request, Partie $partie)
+    {
         $pioche = json_decode($partie->getPioche());
         $joueur1 = $partie->getJoueur1Id()->getId();
         $joueur2 = $partie->getJoueur2Id()->getId();
@@ -544,11 +581,129 @@ class PartieController extends Controller
         $plateauJ2 = json_decode($partie->getPlateauJoueur2(), true);
         $tourde = $partie->getPartieTourJoueurId();
         $em = $this->getDoctrine()->getManager();
-        if (count($pioche) == 0){
-            if ($partie->getScoreJoueur1() > $partie->getScoreJoueur2()){
+        //on provoque le changement de tour
+        if ($tourde == $joueur1) {
+            //on set le tourjoueurid à l'id du joueur 2
+            $partie->setPartieTourJoueurId($joueur2);
+            //on remet à 0 le compteur de tours
+            $partie->setCompteurActionTour(0);
+            //on compte le score du joueur 1
+            $tabPoints = $plateauJ1;
+            $extraAperitif = 0;
+            $extraEntree = 0;
+            $extraPlat = 0;
+            $extraLaitage = 0;
+            $extraDessert = 0;
+            $tabAperitif = array();
+            $tabEntree = array();
+            $tabPlat = array();
+            $tabLaitage = array();
+            $tabDessert = array();
+            foreach ($tabPoints['aperitif'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabAperitif, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraAperitif++;
+                }
+            }
+            foreach ($tabPoints['entree'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabEntree, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraEntree++;
+                }
+            }
+            foreach ($tabPoints['plat'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabPlat, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraPlat++;
+                }
+            }
+            foreach ($tabPoints['laitage'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabLaitage, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraLaitage++;
+                }
+            }
+            foreach ($tabPoints['dessert'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabDessert, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraDessert++;
+                }
+            }
+            $score = ($extraAperitif + 1) * array_sum($tabAperitif) + ($extraEntree + 1) * array_sum($tabEntree) + ($extraPlat + 1) * array_sum($tabPlat) + ($extraLaitage + 1) * array_sum($tabLaitage) + ($extraDessert + 1) * array_sum($tabDessert);
+            $partie->setScoreJoueur1($score);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($partie);
+            $em->flush();
+        } elseif ($tourde == $joueur2) {
+            //on set le tourjoueurid à l'id du joueur 2
+            $partie->setPartieTourJoueurId($joueur1);
+            //on remet à 0 le compteur de tours
+            $partie->setCompteurActionTour(0);
+            //on compte le score du joueur 2
+            $tabPoints = $plateauJ2;
+            $extraAperitif = 0;
+            $extraEntree = 0;
+            $extraPlat = 0;
+            $extraLaitage = 0;
+            $extraDessert = 0;
+            $tabAperitif = array();
+            $tabEntree = array();
+            $tabPlat = array();
+            $tabLaitage = array();
+            $tabDessert = array();
+            foreach ($tabPoints['aperitif'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabAperitif, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraAperitif++;
+                }
+            }
+            foreach ($tabPoints['entree'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabEntree, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraEntree++;
+                }
+            }
+            foreach ($tabPoints['plat'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabPlat, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraPlat++;
+                }
+            }
+            foreach ($tabPoints['laitage'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabLaitage, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraLaitage++;
+                }
+            }
+            foreach ($tabPoints['dessert'] as $valeur) {
+                $carteTrait = self::getCarte($valeur)->getValeur();
+                array_push($tabDessert, $carteTrait);
+                if ($carteTrait == 0) {
+                    $extraDessert++;
+                }
+            }
+            $score = ($extraAperitif + 1) * array_sum($tabAperitif) + ($extraEntree + 1) * array_sum($tabEntree) + ($extraPlat + 1) * array_sum($tabPlat) + ($extraLaitage + 1) * array_sum($tabLaitage) + ($extraDessert + 1) * array_sum($tabDessert);
+            $partie->setScoreJoueur2($score);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($partie);
+            $em->flush();
+        }
+        if (count($pioche) == 0) {
+            if ($partie->getScoreJoueur1() > $partie->getScoreJoueur2()) {
                 //On met le joueur 1 gagnant
                 $partie->getJoueur1Id()->setPoints($partie->getJoueur1Id()->getPoints() + 20);
-                if (($partie->getJoueur2Id()->getPoints() - 10) < 0){
+                if (($partie->getJoueur2Id()->getPoints() - 10) < 0) {
                     $partie->getJoueur2Id()->setPoints(0);
                 } else {
                     $partie->getJoueur2Id()->setPoints($partie->getJoueur2Id()->getPoints() - 10);
@@ -558,11 +713,11 @@ class PartieController extends Controller
                 $partie->getJoueur2Id()->setParties_Perdues($partie->getJoueur2Id()->getParties_Perdues() + 1);
                 $em->persist($partie);
                 $em->flush();
-                return $this->render('parties/fin-partie.html.twig');
-            } elseif($partie->getScoreJoueur1() < $partie->getScoreJoueur2()) {
+                return $this->redirectToRoute('fin_partie', array('id' => $partie->getId()));
+            } elseif ($partie->getScoreJoueur1() < $partie->getScoreJoueur2()) {
                 //On met le joueur 2 gagnant
                 $partie->getJoueur2Id()->setPoints($partie->getJoueur2Id()->getPoints() + 20);
-                if (($partie->getJoueur1Id()->getPoints() - 10) < 0){
+                if (($partie->getJoueur1Id()->getPoints() - 10) < 0) {
                     $partie->getJoueur1Id()->setPoints(0);
                 } else {
                     $partie->getJoueur1Id()->setPoints($partie->getJoueur1Id()->getPoints() - 10);
@@ -572,141 +727,67 @@ class PartieController extends Controller
                 $partie->getJoueur1Id()->setParties_Perdues($partie->getJoueur1Id()->getParties_Perdues() + 1);
                 $em->persist($partie);
                 $em->flush();
-                return $this->render('parties/fin-partie.html.twig');
+                return $this->redirectToRoute('fin_partie', array('id' => $partie->getId()));
             } else {
                 //On met les 2 joueurs à égalité
             }
             $partie->setTerminee(1);
             $em->persist($partie);
             $em->flush();
-        } else {
-            //on provoque le changement de tour
-            if ($tourde == $joueur1){
-                //on set le tourjoueurid à l'id du joueur 2
-                $partie->setPartieTourJoueurId($joueur2);
-                //on remet à 0 le compteur de tours
-                $partie->setCompteurActionTour(0);
-                //on compte le score du joueur 1
-                $tabPoints = $plateauJ1;
-                $extraAperitif = 0;
-                $extraEntree = 0;
-                $extraPlat = 0;
-                $extraLaitage = 0;
-                $extraDessert = 0;
-                $tabAperitif = array();
-                $tabEntree = array();
-                $tabPlat = array();
-                $tabLaitage = array();
-                $tabDessert = array();
-                foreach ($tabPoints['aperitif'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabAperitif, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraAperitif++;
-                    }
-                }
-                foreach ($tabPoints['entree'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabEntree, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraEntree++;
-                    }
-                }
-                foreach ($tabPoints['plat'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabPlat, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraPlat++;
-                    }
-                }
-                foreach ($tabPoints['laitage'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabLaitage, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraLaitage++;
-                    }
-                }
-                foreach ($tabPoints['dessert'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabDessert, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraDessert++;
-                    }
-                }
-                $score = ($extraAperitif + 1) * array_sum($tabAperitif) + ($extraEntree + 1) * array_sum($tabEntree) + ($extraPlat + 1) * array_sum($tabPlat) + ($extraLaitage + 1) * array_sum($tabLaitage) + ($extraDessert + 1) * array_sum($tabDessert);
-                $partie->setScoreJoueur1($score);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($partie);
-                $em->flush();
-            } elseif($tourde == $joueur2) {
-                //on set le tourjoueurid à l'id du joueur 2
-                $partie->setPartieTourJoueurId($joueur1);
-                //on remet à 0 le compteur de tours
-                $partie->setCompteurActionTour(0);
-                //on compte le score du joueur 2
-                $tabPoints = $plateauJ2;
-                $extraAperitif = 0;
-                $extraEntree = 0;
-                $extraPlat = 0;
-                $extraLaitage = 0;
-                $extraDessert = 0;
-                $tabAperitif = array();
-                $tabEntree = array();
-                $tabPlat = array();
-                $tabLaitage = array();
-                $tabDessert = array();
-                foreach ($tabPoints['aperitif'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabAperitif, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraAperitif++;
-                    }
-                }
-                foreach ($tabPoints['entree'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabEntree, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraEntree++;
-                    }
-                }
-                foreach ($tabPoints['plat'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabPlat, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraPlat++;
-                    }
-                }
-                foreach ($tabPoints['laitage'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabLaitage, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraLaitage++;
-                    }
-                }
-                foreach ($tabPoints['dessert'] as $valeur){
-                    $carteTrait = self::getCarte($valeur)->getValeur();
-                    array_push($tabDessert, $carteTrait);
-                    if ($carteTrait == 0){
-                        $extraDessert++;
-                    }
-                }
-                $score = ($extraAperitif + 1) * array_sum($tabAperitif) + ($extraEntree + 1) * array_sum($tabEntree) + ($extraPlat + 1) * array_sum($tabPlat) + ($extraLaitage + 1) * array_sum($tabLaitage) + ($extraDessert + 1) * array_sum($tabDessert);
-                $partie->setScoreJoueur2($score);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($partie);
-                $em->flush();
-            }
         }
-        return $this->redirectToRoute('fin_partie', array('id' => $partie->getId()));
+        return $this->redirectToRoute('afficher_partie', array('id' => $partie->getId()));
     }
 
     /**
-     * @Route("/fin/{partie}", name="fin_partie")
+     * @param Request $request
+     * @param Partie $partie
+     * @Route("/posterchat/{partie}", name="poster_chat")
      */
-    public function finPartie(Partie $partie){
-        $this->renderView(':parties:fin-partie.html.twig');
+    public function posterChat(Request $request, Partie $partie)
+    {
+        $userid = $this->getUser()->getId();
+        $messageReq = $request->request->all();
+        $message = $messageReq['message'];
+        $em = $this->getDoctrine()->getManager();
+        $chat = new Chat();
+        $chat->setPartieId($partie->getId());
+        $chat->setJoueurId($userid);
+        $chat->setMessage($message);
+        $chat->setDateEnvoi(date("Y-m-d H:i:s"));
+        $em->persist($chat);
+        $em->flush();
+        return $this->redirectToRoute('afficher_partie', array('id' => $partie->getId()));
     }
 
+    /**
+     * @param Parties $id
+     * @Route("/afficher/chat/{id}", name="afficher_chat")
+     * @Method("GET")
+     */
+    public function afficherChat(Partie $id)
+    {
+        $messages = $this->getDoctrine()->getRepository('AppBundle:Chat')->findBy(array('partieId' => $id->getId()));
+        return $this->render('parties/chat.html.twig',
+            [
+                'partie' => $id,
+                'messages' => $messages,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/fin/{id}", name="fin_partie")
+     */
+    public function finPartie(Partie $id)
+    {
+        return $this->render('parties:fin-partie.html.twig');
+    }
+
+    /**
+     * @Route("/terminee", name="partie_terminee")
+     */
+    public function partieTerminee()
+    {
+        return $this->render('parties/erreurs/partie_finie.html.twig');
+    }
 }

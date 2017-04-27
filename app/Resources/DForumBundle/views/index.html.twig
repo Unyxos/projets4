@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container" style="margin-top: 130px;">
+    <div class="container">
         <h1 class="text-center">{{ 'discutea.forum.forumlist'|trans }}</h1><br />
         <div class="col-md-12">
             {% for category in categories if is_granted('CanReadCategory', category) %}

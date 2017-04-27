@@ -1,0 +1,19 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+    <div>
+        <div class="row" style="background-color: #E72F5B; width: 100%; color: white; font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; border-radius: 4px 4px 0px 0px; margin-top: 20px;">
+            <div style="text-align: center">
+                {% trans from 'FOSMessageBundle' %}send_new{% endtrans %}
+            </div>
+        </div>
+        </div>
+<h2></h2>
+
+<form action="{{ url('fos_message_thread_new') }}" method="post">
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+
+{% endblock %}

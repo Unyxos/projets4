@@ -1,41 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Classement</h1>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Avatar</th>
-                <th>Pseudo</th>
-                <th>Nom</th>
-                <th>Adresse mail</th>
-                <th>Points</th>
-                <th>Parties gagnées</th>
-                <th>Parties perdues</th>
-                <th>Ratio W/L</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
+    <div class="container" style="margin-top: 70px">
+        <h1 style="font-weight: bold; font-size: 18px">Classement</h1><br />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead style="background-color: #E72F5B; width: 100%; color: white; font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; border-radius: 4px 4px 0px 0px; margin-top: 20px;"  >
                 <tr>
-                    <td>{{ user.id }}</a></td>
-                    <td><img width="64px" src="{{ user.imagename }}"></td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.nom }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.points }}</td>
-                    <td>{{ user.parties_gagnees }}</td>
-                    <td>{{ user.parties_perdues }}</td>
-                    {% if user.parties_perdues == 0 %}
-                        <td>{{ user.parties_gagnees }}</td>
-                    {% else %}
-                        <td>{{ (user.parties_gagnees/user.parties_perdues)|round(1) }}</td>
-                    {% endif %}
+                    <th></th>
+                    <th>Avatar</th>
+                    <th>Pseudo</th>
+                    <th>Points</th>
+                    <th>Parties gagnées</th>
+                    <th>Parties perdues</th>
+                    <th>Ratio W/L</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% set compteur = 1 %}
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {{ compteur }}
+                            {% set compteur = compteur + 1 %}
+                        </td>
+                        <td><img width="64px" src="{{ asset('images/avatars/' ~ user.imageName) }}"></td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.points }}</td>
+                        <td>{{ user.parties_gagnees }}</td>
+                        <td>{{ user.parties_perdues }}</td>
+                        {% if user.parties_perdues == 0 %}
+                            <td>{{ user.parties_gagnees }}</td>
+                        {% else %}
+                            <td>{{ (user.parties_gagnees/user.parties_perdues)|round(1) }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

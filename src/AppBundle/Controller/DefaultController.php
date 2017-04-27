@@ -37,17 +37,88 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route ("/jeu", name="jeu")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route ("/contact"), name="contact")
      */
-    public function jeu()
-    {
-        return $this->render('parties/exemple-plateau.html.twig');
+    public function contact(){
+        return $this->render('default/contact.html.twig');
     }
 
     /**
-     * @Route ("/mail")
+     * @param Request $request
+     * @Route("/contact-envoyer", name="envoi_contact")
      */
-    public function mailpreview(){
-        return $this->render('mail/partie/creation_partie/mail_joueur_qui_invite.html.twig');
+    public function contactEnvoi(Request $request){
+        $formulaire = $request->request->all();
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Nouvelle demande de contact !')
+            ->setFrom('frenchfoodcontest@corentincloss.fr')
+            ->setTo('corentin.closs@gmail.com')
+            ->setBody(
+                $this->renderView(
+                    'mail/form-contact.html.twig',
+                    array(
+                        'nom' => $formulaire['nom'],
+                        'prenom' => $formulaire['prenom'],
+                        'email' => $formulaire['email'],
+                        'message' => $formulaire['message'],
+                    )
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+
+        $this->get('session')->getFlashBag()->add('error',
+            'Votre message a bien été envoyé ! Vous recevrez une réponse au plus vite !'
+        );
+
+        //on envoi un mail à un administrateur
+        return $this->redirectToRoute('app_default_contact');
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/concours-envoyer", name="envoi_concours")
+     */
+    public function concoursEnvoi(Request $request){
+        $formulaire = $request->request->all();
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Nouvelle recette pour le concours !')
+            ->setFrom('frenchfoodcontest@corentincloss.fr')
+            ->setTo('corentin.closs@gmail.com')
+            ->setBody(
+                $this->renderView(
+                    'mail/form-concours.html.twig',
+                    array(
+                        'nom' => $formulaire['nom'],
+                        'prenom' => $formulaire['prenom'],
+                        'mail' => $formulaire['mail'],
+                        'recette' => $formulaire['recette'],
+                    )
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+
+        $this->get('session')->getFlashBag()->add('error',
+            'Votre recette a bien été envoyée ! Surveillez notre magazine pour peut être la découvrir ;)'
+        );
+
+        //on envoi un mail à un administrateur
+        return $this->redirectToRoute('concours');
+    }
+
+    /**
+     * @Route("/concours", name="concours")
+     */
+    public function concours(){
+        return $this->render('default/concours.html.twig');
+    }
+
+    /**
+     * @Route("magazine/", name="magazine")
+     */
+    public function magazine(){
+        return $this->render('default/magazine.html.twig');
     }
 }

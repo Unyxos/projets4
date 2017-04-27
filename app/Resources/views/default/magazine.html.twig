@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block divpage %}<div class="page-magazine" >{% endblock %}
+{% block body %}
+    <script type="text/javascript" src="{{ asset('extras/jquery.min.1.7.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('extras/modernizr.2.5.3.min.js') }}"></script>
+    <div class="flipbook-viewport">
+        <div class="container">
+            <div class="flipbook">
+                <div style="background-image:url({{ asset('pages/1.png') }})"></div>
+                <div style="background-image:url({{ asset('pages/2.png') }})"></div>
+                <div style="background-image:url({{ asset('pages/3.png') }})"></div>
+                <div style="background-image:url({{ asset('pages/4.png') }})"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        function loadApp() {
+
+            // Create the flipbook
+
+            $('.flipbook').turn({
+                // Width
+
+                width:1200,
+
+                // Height
+
+                height:600,
+
+                // Elevation
+
+                elevation: 50,
+
+                // Enable gradients
+
+                gradients: true,
+
+                // Auto center this flipbook
+
+                autoCenter: true
+
+            });
+        }
+
+        // Load the HTML4 version if there's not CSS transform
+
+        yepnope({
+            test : Modernizr.csstransforms,
+            yep: ['{{ asset('lib/turn.js') }}'],
+            nope: ['{{ asset('lib/turn.html4.min.js') }}'],
+            both: ['{{ asset('css/basic.css') }}'],
+            complete: loadApp
+        });
+
+    </script>
+    </div>
+{% endblock %}

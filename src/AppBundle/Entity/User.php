@@ -64,8 +64,8 @@ class User extends BaseUser implements ParticipantInterface
     protected $prenom;
 
     /**
-     * @var \datetime
-     * @ORM\Column(name="birthday", type="datetime")
+     * @var string
+     * @ORM\Column(name="birthday", type="string")
      */
     protected $birthday;
 

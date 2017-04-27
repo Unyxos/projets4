@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% block divpage %}<div class="page-concours">{% endblock %}
+{% block body %}
+        <section class="content-concours">
+            <div class="row">
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 alert alert-success" role="alert"><span style="font-weight: bold">C'est bon !</span> {{ flashMessage }} </div>
+                {% endfor %}
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                        <div class="relative">
+                            <div class="valideRecette"><span class="valideTexte">Recette validée !</span></div>
+                            <img src="{{ asset('img/salade.png') }}" alt="" class="img-responsive img-salade">
+                        </div>
+                        <div class="no-padd participerText col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p>Participer !</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                        <div class="titleConcours">
+                            <h1>Concours de la semaine !</h1>
+                            <span class="sousTitreConcours">avec des olives...</span>
+                        </div>
+                        <div class="ConcoursText">
+                            <p>Le but du jeu est de réaliser la recette la plus folle (mais mangeable !) qui puisse vous passer par la tête. Vous devez respecter l’ingrédient principal : celui-ci doit ressortir en majorité au niveau du goût. Vous posterez également une photo de votre recette afin de l’illustrer. A vos marmites !</p>
+                            <p>Remplissez le formulaire afin de participer au concours de la semaine. Votre recette sera publiée dans notre <a href="{{ path('magazine') }}" title="Lien vers le magazine" class="MagLink">Magazine</a> de la même manière que l’exemple ci-dessus. Toute participation est gratuite !</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="cercleInscription col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="cercleInscriptionContent">
+                            <h2>Ma recette</h2>
+                            <form action="{{ path('envoi_concours') }}" method="POST" id="formRecette">
+                                <div class="form-group">
+                                    <label for="prenom">Prenom :</label>
+                                    <input  id="prenom" type="text" name="prenom" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nom">Nom :</label>
+                                    <input id="nom"  type="text" name="nom" class="form-control">
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="mail">Mail :</label>
+                                    <input id="mail"  type="email" name="mail" class="form-control">
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="recette">Recette :</label>
+                                    <textarea id="recette" class="form-control" name="recette" rows="4"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="form-control btn-primary" type="submit">Envoyer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
