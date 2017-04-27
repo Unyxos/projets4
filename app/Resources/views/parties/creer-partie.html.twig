@@ -1,10 +1,15 @@
     {% extends 'base.html.twig' %}
 
     {% block body %}
-        <div style="margin-top: 130px">
-            {{ form_start(create_form) }}
-            {{ form_widget(create_form) }}
-            <input type="submit" value="Create" />
-            {{ form_end(create_form) }}
+        <div class="container" style="margin-top: 45px;">
+            <div style="text-align: center">
+                <h2 style="font-size: 18px; font-weight: bold">Créer une nouvelle partie !</h2>
+            </div><br />
+            <div style="text-align: center">
+                {{ form_start(create_form) }}
+                {{ form_widget(create_form) }}
+                <br /><input type="submit" value="Créer la partie !" />
+                {{ form_end(create_form) }}
+            </div>
         </div>
     {% endblock body %}

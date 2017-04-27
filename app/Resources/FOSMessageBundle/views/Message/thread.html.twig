@@ -1,0 +1,39 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+    <div>
+        <div class="row"
+             style="background-color: #E72F5B; width: 100%; color: white; font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; border-radius: 4px 4px 0px 0px; margin-top: 20px;">
+            <div style="text-align: center">
+                {{ thread.subject }}
+            </div>
+        </div>
+    </div>
+
+    {% for message in thread.messages %}
+        <div class="row" style="margin-left: -15px; margin-right: 15px; padding-top : 15px; padding-bottom: 15px; border-bottom: 1px solid darkgrey; border-left: 1px solid darkgrey; border-right: 1px solid darkgrey;">
+            <div style="margin-left: 30px" class="messenger_thread_message">
+                <div class="messenger_thread_message_info">
+                    {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'FOSMessageBundle' %}
+                    message_info{% endtrans %}
+                </div>
+
+                <div class="messenger_thread_message_body" id="message_{{ message.id }}">
+                    <span style="font-weight: bold; text-decoration: underline">Sujet :</span> <br />
+                    <div style="margin-left: 20px; margin-top: 15px">
+                        {{ message.body }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <h3>{% trans from 'FOSMessageBundle' %}reply{% endtrans %}</h3>
+
+    <form action="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}" method="post">
+        {{ form_widget(form) }}
+
+        <input type="submit"/>
+    </form>
+
+{% endblock %}

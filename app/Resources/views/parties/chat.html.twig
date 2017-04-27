@@ -1,0 +1,10 @@
+{% for message in messages %}
+    <p style="margin-bottom: 7px;">
+        {% if message.joueurId == partie.joueur1Id.id %}
+            {{ partie.joueur1Id.username }}
+        {% elseif message.joueurId == partie.joueur2Id.id %}
+            {{ partie.joueur2Id.username }}
+        {% endif %}
+            ({{ message.dateEnvoi|date("H:i") }}) : {{ message.message }}
+    </p>
+{% endfor %}

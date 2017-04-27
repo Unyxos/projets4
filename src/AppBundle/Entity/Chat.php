@@ -32,16 +32,9 @@ class Chat
     /**
      * @var int
      *
-     * @ORM\Column(name="joueur_1_id", type="integer")
+     * @ORM\Column(name="joueur_id", type="integer")
      */
-    private $joueur1Id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="joueur_2_id", type="integer")
-     */
-    private $joueur2Id;
+    private $joueurId;
 
     /**
      * @var string
@@ -53,7 +46,7 @@ class Chat
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_envoi", type="datetime")
+     * @ORM\Column(name="date_envoi", type="text")
      */
     private $dateEnvoi;
 
@@ -99,9 +92,9 @@ class Chat
      *
      * @return Chat
      */
-    public function setJoueur1Id($joueur1Id)
+    public function setJoueurId($joueurId)
     {
-        $this->joueur1Id = $joueur1Id;
+        $this->joueurId = $joueurId;
 
         return $this;
     }
@@ -111,33 +104,9 @@ class Chat
      *
      * @return int
      */
-    public function getJoueur1Id()
+    public function getJoueurId()
     {
-        return $this->joueur1Id;
-    }
-
-    /**
-     * Set joueur2Id
-     *
-     * @param integer $joueur2Id
-     *
-     * @return Chat
-     */
-    public function setJoueur2Id($joueur2Id)
-    {
-        $this->joueur2Id = $joueur2Id;
-
-        return $this;
-    }
-
-    /**
-     * Get joueur2Id
-     *
-     * @return int
-     */
-    public function getJoueur2Id()
-    {
-        return $this->joueur2Id;
+        return $this->joueurId;
     }
 
     /**

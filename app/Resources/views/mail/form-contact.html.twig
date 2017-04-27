@@ -1,0 +1,47 @@
+{% extends ':mail:base-mail.html.twig' %}
+{% block body %}
+    <style>
+        .bouton-lien {
+            border: 3px solid #373737;
+            padding: 8px;
+            background-color: white;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .corps {
+            margin-top: 30px;
+            text-align: center !important;
+            font-size: 16px;
+            padding: 15px;
+        }
+        .separateur {
+            border: none;
+            height: 3px;
+            color: #373737;
+            background-color: #373737;
+            margin-top: 40px
+        }
+        a {
+            color: #0d6aad;
+            text-decoration: none;
+        }
+    </style>
+    <tr>
+        <td align="center">
+            <img width="200px" style="margin-top: 20px" src="https://i.corentincloss.fr/qatLCPAL.png">
+            <hr class="separateur" style="margin-top: 20px;"/>
+            <h2 style="font-weight: bold; margin-top: 45px; margin-bottom: 45px">Formulaire de contact !</h2>
+            <hr class="separateur"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="corps">
+            <p>
+                De : {{ nom }} {{ prenom }}<br />
+                Adresse : {{ email }}<br />
+                Message : <br />
+                {{ message }}
+            </p>
+        </td>
+    </tr>
+{% endblock %}

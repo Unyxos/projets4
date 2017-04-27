@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8"/>
-    <title>PROJET S4</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <title>French Food Contest | Accueil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/screen.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main_style.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/6b36206ea7.css">
     {% block javascripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -15,59 +15,66 @@
     {% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><img src="{{ asset('img/logo.png') }}"></a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav nav-center">
-                <li class="active"><a href="{{ path('homepage') }}">Accueil<span class="sr-only">(current)</span></a></li>
-                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                <li><a href="#">Concours</a></li>
-                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                <li><a href="#">Magazine</a></li>
-                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                <li><a href="{{ path('parties_index') }}">Jeu</a></li>
-                <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                <li><a href="{{ path('discutea_forum_homepage') }}">Forum ~</a></li>
-                {% if app.user %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ app.user.username }}<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('app_user_affichermonprofil') }}">Mon profil</a></li>
-                            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
-                            {% if is_granted('ROLE_ADMIN')  %}
-                                <li><a href="{{ path('easyadmin') }}">Administration</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                {% else %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Espace membre</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
-                            <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
-                        </ul>
-                    </li>
-                    <p style="font-weight: bold; color: white; font-family: 'Alegreya', arial, serif" class="navbar-text">~</p>
-                {% endif %}
-                <li><a href="#">Contact</a></li>
-                <li><img src="{{ asset('img/french.png') }}" alt="Site en français"></li>
-                <li><img src="{{ asset('img/english.png') }}" alt="Website in english"></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-            {% block body %}{% endblock %}
-    </body>
+{% block divpage %}{% endblock %}
+    <header class="main-header">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand"><img src="{{ asset('img/logo.png') }}" alt="Logo"></a>
+                </div>
+
+                <div class="collapse navbar-collapse mynavbar" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-center">
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li><a href="{{ path('concours') }}">Concours</a></li>
+                        <li><a href="{{ path('classement') }}">Classement</a></li>
+                        <li><a href="{{ path('magazine') }}">Magazine</a></li>
+                        <li><a href="{{ path('parties_index') }}">Jeu</a></li>
+                        <li><a href="{{ path('discutea_forum_homepage') }}">Forum</a></li>
+                        {% if app.user %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ app.user.username }}<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('app_user_affichermonprofil') }}">Mon profil</a></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                                    {% if is_granted('ROLE_ADMIN')  %}
+                                        <li><a href="{{ path('easyadmin') }}">Administration</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">Espace Membres<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        <li><a href="{{ path('app_default_contact') }}">Contact</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right social">
+                        <li><a href="https://www.instagram.com/frenchfoodcontest/" target="_blank"><img src="{{ asset('img/social1.png') }}" alt=""></a></li>
+                        <li><a href="https://www.facebook.com/frenchfoodcontest/" target="_blank"><img src="{{ asset('img/social2.png') }}" alt=""></a></li>
+                        <li><a href="https://twitter.com/FFoodcontest" target="_blank"><img src="{{ asset('img/social3.png') }}" alt=""></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    {% block body %}
+    {% endblock %}
+</div>
+</body>
 </html>

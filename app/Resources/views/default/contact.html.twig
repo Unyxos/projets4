@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block divpage %}<div class="page-contact">{% endblock %}
+{% block body %}
+        <section class="content-contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h1>Contact</h1>
+                        {% for flashMessage in app.session.flashbag.get('error') %}
+
+                            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 alert alert-success" role="alert"><span style="font-weight: bold">C'est bon !</span> {{ flashMessage }} </div>
+
+                        {% endfor %}
+                        <form id="formContact" method="POST" action="{{ path('envoi_contact') }}" accept="utf-8">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padd">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <input  id="prenom" type="text" name="prenom" class="form-control" placeholder="Prénom">
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <input id="nom"  type="text" name="nom" class="form-control" placeholder="Nom">
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <input id="mail"  type="email" name="email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <textarea id="recette" name="message" class="form-control" rows="6" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <button class="form-control btn-primary" type="submit">Envoyer</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

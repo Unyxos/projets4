@@ -1,16 +1,51 @@
 {% extends('base.html.twig') %}
 
 {% block body %}
-    <div class="container-fluid" style="margin-top: 130px; text-align: center">
+    <div class="container-fluid" style="margin-top: 30px; text-align: center">
         <div id="jeu">
             <!-- Affiche le plateau grâce à l'ajax -->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div id="chat" style="text-align: left; border: 1px solid #333; padding: 5px; border-radius: 5px; max-height: 200px;-webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; -o-hyphens: auto; hyphens: auto; overflow-y: auto;"></div>
+                </div>
+                <div class="col-md-4" style="text-align: left">
+                    <form id="posterchat" method="post" action="{{ path('poster_chat', {partie: partie.id}) }}">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-comment" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" id="message" type="text" name="message" placeholder="Votre message">
+                        </div><br />
+                        <div style="text-align: right">
+                            <button type="submit" class="btn btn-success">Envoyer ce message !</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <script>
         $(document).ready(function () {
             setInterval(function () {
                 $old("#jeu").load("{{ path('afficher_jeu', {id: partie.id}) }}");
+                $old("#chat").load("{{ path('afficher_chat', {id: partie.id}) }}");
+                var elem = document.getElementById('chat');
+                elem.scrollTop = elem.scrollHeight;
             }, 1500);
+            $('#posterchat').on('submit', function (e) {
+                e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+
+                var $this = $(this); // L'objet jQuery du formulaire
+
+                // Envoi de la requête HTTP en mode asynchrone
+                $old.ajax({
+                    url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+                    type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+                    data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+                });
+                $("#message").val('');
+            });
         });
     </script>
 {% endblock %}
