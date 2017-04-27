@@ -634,7 +634,7 @@ class PartieController extends Controller
                     $extraDessert++;
                 }
             }
-            $score = ($extraAperitif + 1) * array_sum($tabAperitif) + ($extraEntree + 1) * array_sum($tabEntree) + ($extraPlat + 1) * array_sum($tabPlat) + ($extraLaitage + 1) * array_sum($tabLaitage) + ($extraDessert + 1) * array_sum($tabDessert);
+            $score = ((($extraAperitif + 1) * array_sum($tabAperitif)) - 20) + ((($extraEntree + 1) * array_sum($tabEntree) - 20) + ((($extraPlat + 1) * array_sum($tabPlat)) - 20) + ((($extraLaitage + 1) * array_sum($tabLaitage) - 20) + ((($extraDessert + 1) * array_sum($
             $partie->setScoreJoueur1($score);
 
             $em = $this->getDoctrine()->getManager();
