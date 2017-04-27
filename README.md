@@ -1,21 +1,6 @@
 projets4
 ========
 
-A Symfony project created on February 16, 2017, 10:08 am.
-#Jeu de carte
-
-_Bundles installés_
-
-`FOS User Bundle`
-
-`VichUploadBundle`
-
-`FOSMessageBundle`
-
-`EasyAdminBundle`
-
-`DForumBundle`
-
 #Modification des Entités pour EAB.
 Modifier vendor/discutea/forum-bundle/Discutea/DForumBundle/Entity/Category.php pour : 
 ```
